@@ -1,0 +1,2219 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SellerPilot | List Faster. Sell Smarter. Multi-Marketplace E-commerce OS</title>
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Chart.js for Analytics -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- Google Fonts: Plus Jakarta Sans & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+          colors: {
+            brand: {
+              50: '#eef2ff',
+              100: '#e0e7ff',
+              200: '#c7d2fe',
+              500: '#6366f1',
+              600: '#4f46e5',
+              700: '#4338ca',
+              800: '#3730a3',
+              900: '#312e81',
+              950: '#1e1b4b',
+            },
+            meesho: '#8B1E62',
+            flipkart: '#2874F0',
+            amazon: '#FF9900'
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: #f8fafc;
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 5px;
+      height: 5px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background-color: #cbd5e1;
+      border-radius: 9999px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    .glass-card {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(226, 232, 240, 0.9);
+    }
+    .badge-pulse {
+      animation: pulse-ring 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
+    @keyframes pulse-ring {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+    .editor-field:focus {
+      outline: none;
+      box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.25);
+      border-color: #6366f1;
+    }
+  </style>
+</head>
+
+<body class="text-slate-800 antialiased h-screen flex flex-col overflow-hidden bg-slate-100">
+
+  <!-- ========================================== -->
+  <!-- TOP HEADER / GLOBAL APP BAR               -->
+  <!-- ========================================== -->
+  <header class="bg-white border-b border-slate-200 z-30 shrink-0 select-none shadow-xs">
+    <div class="flex items-center justify-between px-4 lg:px-6 py-2.5">
+      
+      <!-- Logo & Brand Identity -->
+      <div class="flex items-center gap-6">
+        <div class="flex items-center gap-3 cursor-pointer" onclick="switchTab('analytics')">
+          <div class="h-9 w-9 rounded-xl bg-gradient-to-tr from-brand-600 via-indigo-600 to-violet-500 flex items-center justify-center text-white shadow-md shadow-brand-500/20">
+            <i data-lucide="zap" class="w-5 h-5 fill-current"></i>
+          </div>
+          <div>
+            <div class="flex items-center gap-1.5">
+              <span class="font-extrabold text-lg tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-slate-900 via-brand-800 to-indigo-600">SellerPilot</span>
+              <span class="text-[9px] uppercase font-extrabold tracking-wider px-1.5 py-0.5 rounded bg-indigo-100 text-brand-700 border border-brand-200">OS v2.4</span>
+            </div>
+            <p class="text-[10px] text-slate-400 font-semibold tracking-tight -mt-0.5">List Faster. Sell Smarter.</p>
+          </div>
+        </div>
+
+        <!-- Live Sync Status Pills (Multi-marketplace) -->
+        <div class="hidden xl:flex items-center gap-2 bg-slate-50 border border-slate-200 rounded-lg p-1 text-xs">
+          <div class="flex items-center gap-1.5 px-2.5 py-1 rounded bg-white shadow-2xs border border-slate-200">
+            <span class="w-2 h-2 rounded-full bg-emerald-500 badge-pulse"></span>
+            <span class="font-bold text-meesho">Meesho</span>
+            <span class="text-slate-400 font-medium text-[11px]">3,840 SKUs</span>
+          </div>
+          <div class="flex items-center gap-1.5 px-2.5 py-1 rounded bg-white shadow-2xs border border-slate-200">
+            <span class="w-2 h-2 rounded-full bg-emerald-500 badge-pulse"></span>
+            <span class="font-bold text-amber-600">Amazon.in</span>
+            <span class="text-slate-400 font-medium text-[11px]">1,290 SKUs</span>
+          </div>
+          <div class="flex items-center gap-1.5 px-2.5 py-1 rounded bg-white shadow-2xs border border-slate-200">
+            <span class="w-2 h-2 rounded-full bg-emerald-500 badge-pulse"></span>
+            <span class="font-bold text-flipkart">Flipkart</span>
+            <span class="text-slate-400 font-medium text-[11px]">940 SKUs</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Action Utilities & User Context -->
+      <div class="flex items-center gap-2.5 lg:gap-3.5">
+        
+        <!-- Chrome Extension Quick Trigger -->
+        <button onclick="toggleChromeExtModal()" class="flex items-center gap-2 px-3 py-1.5 text-xs font-bold text-indigo-700 bg-indigo-50 hover:bg-indigo-100 border border-indigo-200/80 rounded-lg transition-all shadow-2xs">
+          <i data-lucide="chrome" class="w-4 h-4 text-indigo-600"></i>
+          <span class="hidden sm:inline">Chrome Extension</span>
+          <span class="px-1.5 py-0.2 bg-emerald-600 text-white rounded text-[9px] font-bold">LIVE</span>
+        </button>
+
+        <!-- 1-Click AI Lister Main CTA -->
+        <button onclick="switchTab('ai-lister')" class="flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-bold text-white bg-gradient-to-r from-brand-600 to-indigo-600 hover:from-brand-700 hover:to-indigo-700 rounded-lg shadow-sm shadow-brand-500/30 transition-all">
+          <i data-lucide="wand-2" class="w-3.5 h-3.5"></i>
+          <span>+ AI Multi-List</span>
+        </button>
+
+        <!-- Notification Center -->
+        <div class="relative">
+          <button id="notifBtn" onclick="toggleNotifications()" class="p-2 text-slate-500 hover:text-slate-800 hover:bg-slate-100 rounded-lg transition-colors relative">
+            <i data-lucide="bell" class="w-4 h-4"></i>
+            <span class="absolute top-1.5 right-1.5 w-2 h-2 bg-rose-500 rounded-full ring-2 ring-white"></span>
+          </button>
+          
+          <div id="notifDropdown" class="hidden absolute right-0 mt-2 w-80 bg-white rounded-xl shadow-2xl border border-slate-200 z-50 p-3 animate-in fade-in zoom-in duration-150">
+            <div class="flex items-center justify-between pb-2 border-b border-slate-100">
+              <span class="font-bold text-xs text-slate-800">Smart Alerts & RTO Risk Shield</span>
+              <span class="text-[10px] text-brand-600 cursor-pointer hover:underline font-bold" onclick="showToast('All notifications marked as read')">Mark read</span>
+            </div>
+            <div class="divide-y divide-slate-100 text-xs mt-2 max-h-64 overflow-y-auto custom-scrollbar">
+              <div class="py-2 flex gap-2.5 items-start">
+                <span class="w-2 h-2 mt-1 rounded-full bg-rose-500 shrink-0"></span>
+                <div>
+                  <p class="text-slate-800 font-bold">RTO Risk Alert (Patna 800001)</p>
+                  <p class="text-slate-500 text-[11px]">3 COD Meesho orders flagged with &gt;70% predicted bounce rate.</p>
+                </div>
+              </div>
+              <div class="py-2 flex gap-2.5 items-start">
+                <span class="w-2 h-2 mt-1 rounded-full bg-emerald-500 shrink-0"></span>
+                <div>
+                  <p class="text-slate-800 font-bold">Amazon BuyBox Secured</p>
+                  <p class="text-slate-500 text-[11px]">AI smart repriced "Girls Floral Set" to ₹399. Listing won BuyBox.</p>
+                </div>
+              </div>
+              <div class="py-2 flex gap-2.5 items-start">
+                <span class="w-2 h-2 mt-1 rounded-full bg-brand-500 shrink-0"></span>
+                <div>
+                  <p class="text-slate-800 font-bold">Flipkart Assured Synced</p>
+                  <p class="text-slate-500 text-[11px]">Generated 8 mandatory FSN variants & pushed to logistics hub.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- User Profile / Auth Toggle Button -->
+        <div class="relative">
+          <button onclick="toggleProfileDropdown()" class="flex items-center gap-2 pl-2 border-l border-slate-200 hover:opacity-90 transition-opacity">
+            <div class="w-8 h-8 rounded-lg bg-gradient-to-tr from-brand-600 to-indigo-500 text-white font-bold flex items-center justify-center text-xs shadow-2xs" id="user-avatar-initials">
+              JF
+            </div>
+            <div class="hidden md:block text-left text-xs leading-tight">
+              <p class="font-bold text-slate-800" id="header-user-name">Jaipur Fab Trends</p>
+              <p class="text-[10px] text-slate-400 font-mono" id="header-user-gst">GST: 08ABCDE1234F1Z5</p>
+            </div>
+            <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-slate-400"></i>
+          </button>
+
+          <!-- Profile Dropdown Menu -->
+          <div id="profileDropdown" class="hidden absolute right-0 mt-2 w-64 bg-white rounded-xl shadow-2xl border border-slate-200 z-50 p-2">
+            <div class="px-3 py-2 border-b border-slate-100">
+              <p class="font-bold text-xs text-slate-900" id="dropdown-user-name">Jaipur Fab Trends Pvt Ltd</p>
+              <p class="text-[11px] text-slate-500 font-medium">seller@jaipurfabtrends.in</p>
+              <span class="inline-block mt-1 px-1.5 py-0.2 bg-emerald-50 text-emerald-700 border border-emerald-200 rounded text-[9px] font-bold">Verified Indian Seller</span>
+            </div>
+            <div class="py-1 space-y-0.5 text-xs">
+              <button onclick="openAuthModal('profile')" class="w-full text-left px-3 py-1.5 hover:bg-slate-50 rounded-md font-medium text-slate-700 flex items-center gap-2">
+                <i data-lucide="user-check" class="w-4 h-4 text-slate-400"></i> Seller Business Profile
+              </button>
+              <button onclick="openAuthModal('login')" class="w-full text-left px-3 py-1.5 hover:bg-slate-50 rounded-md font-medium text-slate-700 flex items-center gap-2">
+                <i data-lucide="log-in" class="w-4 h-4 text-slate-400"></i> Switch Account / Login
+              </button>
+              <button onclick="openAuthModal('signup')" class="w-full text-left px-3 py-1.5 hover:bg-slate-50 rounded-md font-medium text-slate-700 flex items-center gap-2">
+                <i data-lucide="user-plus" class="w-4 h-4 text-slate-400"></i> Register New GST Account
+              </button>
+            </div>
+            <div class="pt-1 mt-1 border-t border-slate-100">
+              <button onclick="simulateLogout()" class="w-full text-left px-3 py-1.5 hover:bg-rose-50 text-rose-600 rounded-md font-bold text-xs flex items-center gap-2">
+                <i data-lucide="log-out" class="w-4 h-4"></i> Sign Out
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </header>
+
+  <!-- ========================================== -->
+  <!-- MAIN LAYOUT (SIDEBAR + CONTENT PANELS)     -->
+  <!-- ========================================== -->
+  <div class="flex flex-1 overflow-hidden">
+    
+    <!-- LEFT SIDE NAVIGATION BAR -->
+    <aside class="w-64 bg-white border-r border-slate-200 flex flex-col justify-between shrink-0 select-none shadow-2xs">
+      <div class="p-3 space-y-1 custom-scrollbar overflow-y-auto">
+        <p class="px-3 text-[10px] font-extrabold tracking-wider text-slate-400 uppercase mb-2">Core OS Workspace</p>
+        
+        <button onclick="switchTab('analytics')" id="nav-analytics" class="sidebar-link w-full flex items-center gap-3 px-3 py-2 text-xs font-bold rounded-lg bg-brand-50 text-brand-700 transition-all">
+          <i data-lucide="layout-dashboard" class="w-4 h-4"></i>
+          <span>Catalog Health & Pulse</span>
+        </button>
+
+        <button onclick="switchTab('ai-lister')" id="nav-ai-lister" class="sidebar-link w-full flex items-center justify-between px-3 py-2 text-xs font-semibold rounded-lg text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-all">
+          <div class="flex items-center gap-3">
+            <i data-lucide="sparkles" class="w-4 h-4 text-violet-600"></i>
+            <span>1-Click Multi-Lister</span>
+          </div>
+          <span class="text-[9px] bg-gradient-to-r from-violet-600 to-brand-600 text-white font-extrabold px-1.5 py-0.5 rounded-full shadow-2xs">AI Pro</span>
+        </button>
+
+        <button onclick="switchTab('products')" id="nav-products" class="sidebar-link w-full flex items-center justify-between px-3 py-2 text-xs font-semibold rounded-lg text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-all">
+          <div class="flex items-center gap-3">
+            <i data-lucide="folder-kanban" class="w-4 h-4 text-slate-500"></i>
+            <span>Master Product Library</span>
+          </div>
+          <span class="text-[10px] text-slate-500 font-mono font-bold">142</span>
+        </button>
+
+        <button onclick="switchTab('orders')" id="nav-orders" class="sidebar-link w-full flex items-center justify-between px-3 py-2 text-xs font-semibold rounded-lg text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-all">
+          <div class="flex items-center gap-3">
+            <i data-lucide="shopping-bag" class="w-4 h-4 text-slate-500"></i>
+            <span>Orders & RTO Shield</span>
+          </div>
+          <span class="px-1.5 py-0.5 text-[9px] bg-rose-100 text-rose-700 font-bold rounded">18 COD</span>
+        </button>
+
+        <button onclick="switchTab('inventory')" id="nav-inventory" class="sidebar-link w-full flex items-center gap-3 px-3 py-2 text-xs font-semibold rounded-lg text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-all">
+          <i data-lucide="boxes" class="w-4 h-4 text-slate-500"></i>
+          <span>Omni-Stock Balancer</span>
+        </button>
+
+        <button onclick="switchTab('payouts')" id="nav-payouts" class="sidebar-link w-full flex items-center gap-3 px-3 py-2 text-xs font-semibold rounded-lg text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-all">
+          <i data-lucide="indian-rupee" class="w-4 h-4 text-slate-500"></i>
+          <span>Payouts & Overcharges</span>
+        </button>
+
+        <button onclick="switchTab('reports')" id="nav-reports" class="sidebar-link w-full flex items-center gap-3 px-3 py-2 text-xs font-semibold rounded-lg text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-all">
+          <i data-lucide="bar-chart-3" class="w-4 h-4 text-slate-500"></i>
+          <span>Reports & Tax Invoices</span>
+        </button>
+
+        <p class="px-3 text-[10px] font-extrabold tracking-wider text-slate-400 uppercase pt-4 pb-1">Integrations & Extension</p>
+        
+        <button onclick="toggleChromeExtModal()" class="w-full flex items-center justify-between px-3 py-2 text-xs font-semibold rounded-lg text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-all">
+          <div class="flex items-center gap-3">
+            <i data-lucide="puzzle" class="w-4 h-4 text-emerald-600"></i>
+            <span>Competitor Spy Tool</span>
+          </div>
+          <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+        </button>
+
+        <button onclick="openManifestCodeModal()" class="w-full flex items-center gap-3 px-3 py-2 text-xs font-medium rounded-lg text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-all">
+          <i data-lucide="code-2" class="w-4 h-4 text-indigo-500"></i>
+          <span>Manifest V3 Source</span>
+        </button>
+      </div>
+
+      <!-- User Tier & AI Credits Usage -->
+      <div class="p-3 border-t border-slate-200 bg-slate-50/70">
+        <div class="bg-gradient-to-br from-slate-900 via-slate-800 to-indigo-950 text-white p-3.5 rounded-xl shadow-xs">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-[10px] font-bold tracking-wider text-indigo-200 uppercase">AI Listing Balance</span>
+            <span class="text-xs font-bold text-amber-400" id="ai-credit-count">842 / 1,000</span>
+          </div>
+          <div class="w-full bg-slate-700 h-1.5 rounded-full overflow-hidden mb-2.5">
+            <div class="bg-gradient-to-r from-brand-500 via-indigo-400 to-emerald-400 h-full w-[84%]"></div>
+          </div>
+          <button onclick="showToast('⚡ Credits refilled! Added +500 AI Multi-List conversions.')" class="w-full py-1.5 text-center text-[11px] font-bold bg-white/10 hover:bg-white/20 text-white rounded-lg border border-white/10 transition-colors">
+            Top Up Listing Engine
+          </button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- CENTER DYNAMIC WORKSPACE -->
+    <main class="flex-1 overflow-y-auto bg-slate-50 custom-scrollbar p-4 lg:p-6">
+      
+      <!-- ======================================================== -->
+      <!-- TAB 1: CATALOG HEALTH & ANALYTICS (Matches Reference UX)  -->
+      <!-- ======================================================== -->
+      <section id="tab-analytics" class="space-y-5 max-w-7xl mx-auto">
+        
+        <!-- Top Catalog Item Selection Card -->
+        <div class="bg-white rounded-xl p-4 border border-slate-200 shadow-xs flex flex-wrap items-center justify-between gap-4">
+          <div class="flex items-center gap-3 sm:gap-4">
+            <button onclick="showToast('Browsing full catalog library...')" class="p-2 hover:bg-slate-100 rounded-lg text-slate-500 transition-colors" title="Previous Catalog">
+              <i data-lucide="chevron-left" class="w-5 h-5"></i>
+            </button>
+            <div class="flex items-center gap-3">
+              <div class="relative group shrink-0">
+                <img src="https://images.unsplash.com/photo-1622290291468-a28f7a7dc6a8?w=160&auto=format&fit=crop&q=80" alt="Product thumbnail" class="w-13 h-13 object-cover rounded-lg border border-slate-200 shadow-2xs" />
+                <span class="absolute -bottom-1 -right-1 bg-meesho text-white text-[9px] font-extrabold px-1.5 py-0.2 rounded shadow-2xs">Meesho</span>
+              </div>
+              <div>
+                <div class="flex flex-wrap items-center gap-2">
+                  <h1 class="font-bold text-slate-900 text-base">Pretty Stylish Girls Top & Bottom Sets</h1>
+                  <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-200">Catalog Score: 98/100</span>
+                </div>
+                <div class="flex flex-wrap items-center gap-2 sm:gap-3 text-xs text-slate-500 mt-1">
+                  <span class="font-black text-slate-900 text-sm">₹399</span>
+                  <span class="text-slate-300">|</span>
+                  <span>Catalog ID: <span class="font-mono font-semibold text-slate-700">349761406</span></span>
+                  <span class="text-slate-300">|</span>
+                  <span class="text-emerald-700 font-semibold flex items-center gap-1">
+                    <i data-lucide="check-circle" class="w-3 h-3 text-emerald-600"></i> Active on Amazon & Flipkart
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-2">
+            <button onclick="loadProductInLister('Pretty Stylish Girls Top & Bottom Sets', 399, 'Girls Top & Bottom Set, Cotton, Red Floral Print, Size 2-8 Years')" class="px-3 py-1.5 text-xs font-bold text-slate-700 bg-white border border-slate-300 hover:bg-slate-50 rounded-lg flex items-center gap-1.5 shadow-2xs transition-all">
+              <i data-lucide="edit-3" class="w-3.5 h-3.5 text-slate-500"></i> Edit in AI Lister
+            </button>
+            <button onclick="showToast('⚡ Smart Repricing activated! BuyBox guaranteed.')" class="px-3 py-1.5 text-xs font-bold text-brand-700 bg-brand-50 border border-brand-200 hover:bg-brand-100 rounded-lg flex items-center gap-1.5 transition-all">
+              <i data-lucide="trending-up" class="w-3.5 h-3.5 text-brand-600"></i> Smart Reprice
+            </button>
+          </div>
+        </div>
+
+        <!-- Main Health of Catalog Card (Direct functional replica of reference screenshot) -->
+        <div class="bg-white rounded-xl border border-slate-200 shadow-xs overflow-hidden">
+          
+          <!-- Card Header with Filter Controls -->
+          <div class="p-5 border-b border-slate-100 flex flex-wrap items-center justify-between gap-4">
+            <div class="flex flex-wrap items-center gap-3">
+              <h2 class="text-lg font-bold text-slate-900">Health of Catalog</h2>
+              <div class="relative">
+                <select id="timeRangeSelect" onchange="updateChartData()" class="text-xs font-bold text-brand-700 bg-indigo-50/80 border border-indigo-200 rounded-lg px-3 py-1.5 pr-7 appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-brand-500">
+                  <option value="30">in Last 30 Days</option>
+                  <option value="7">in Last 7 Days</option>
+                  <option value="90">in Last 90 Days</option>
+                </select>
+                <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-brand-600 absolute right-2 top-2.5 pointer-events-none"></i>
+              </div>
+              <span id="dateRangeText" class="text-xs text-slate-400 font-medium">(3 Sept '26 - 2 Oct '26)</span>
+            </div>
+
+            <!-- Marketplace Source Filter -->
+            <div class="flex items-center gap-1 bg-slate-100 p-1 rounded-lg text-xs">
+              <button onclick="setMarketplaceFilter('all', this)" class="mkt-filter px-2.5 py-1 rounded font-bold bg-white text-slate-900 shadow-2xs">All Channels</button>
+              <button onclick="setMarketplaceFilter('meesho', this)" class="mkt-filter px-2.5 py-1 rounded font-medium text-slate-600 hover:text-slate-900">Meesho</button>
+              <button onclick="setMarketplaceFilter('amazon', this)" class="mkt-filter px-2.5 py-1 rounded font-medium text-slate-600 hover:text-slate-900">Amazon</button>
+              <button onclick="setMarketplaceFilter('flipkart', this)" class="mkt-filter px-2.5 py-1 rounded font-medium text-slate-600 hover:text-slate-900">Flipkart</button>
+            </div>
+          </div>
+
+          <!-- Metric Tabs Bar & Last Updated (Matches Reference UI) -->
+          <div class="px-5 pt-4 pb-2 flex flex-wrap items-center justify-between gap-3">
+            <div class="inline-flex rounded-lg border border-slate-200 p-1 bg-slate-50/80 shadow-2xs">
+              <button onclick="switchMetric('views', this)" id="btn-views" class="metric-btn px-4 py-1.5 text-xs font-bold rounded-md bg-brand-600 text-white shadow-xs transition-all">Views</button>
+              <button onclick="switchMetric('clicks', this)" id="btn-clicks" class="metric-btn px-4 py-1.5 text-xs font-semibold text-slate-600 hover:text-slate-900 transition-all">Clicks</button>
+              <button onclick="switchMetric('orders', this)" id="btn-orders" class="metric-btn px-4 py-1.5 text-xs font-semibold text-slate-600 hover:text-slate-900 transition-all">Orders</button>
+              <button onclick="switchMetric('sales', this)" id="btn-sales" class="metric-btn px-4 py-1.5 text-xs font-semibold text-slate-600 hover:text-slate-900 transition-all">Sales</button>
+            </div>
+
+            <div class="flex items-center gap-1.5 text-xs text-slate-400">
+              <i data-lucide="info" class="w-3.5 h-3.5 text-slate-400"></i>
+              <span>Last updated <span id="lastUpdatedDate" class="font-medium text-slate-600">30 Sep '26</span></span>
+            </div>
+          </div>
+
+          <!-- Chart & Summary Grid (Matches Screenshot Split Layout) -->
+          <div class="p-5 grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+            
+            <!-- Left 8 Cols: Interactive Curve Line Chart -->
+            <div class="lg:col-span-8 bg-slate-50/60 rounded-xl p-3 border border-slate-100 flex flex-col justify-between" style="min-height: 290px;">
+              <div class="relative w-full h-64">
+                <canvas id="healthChart"></canvas>
+              </div>
+            </div>
+
+            <!-- Right 4 Cols: 2x2 Metric Value Matrix (Exact values from reference) -->
+            <div class="lg:col-span-4 grid grid-cols-2 rounded-xl border border-slate-200 bg-white overflow-hidden divide-x divide-y divide-slate-100 shadow-2xs">
+              
+              <!-- Views -->
+              <div class="p-4 flex flex-col justify-between hover:bg-indigo-50/30 transition-colors">
+                <span class="text-xs font-medium text-slate-500">Views</span>
+                <div class="my-3">
+                  <h3 id="val-views" class="text-2xl lg:text-3xl font-bold text-slate-900 tracking-tight">310,773</h3>
+                </div>
+                <div class="flex items-center gap-1 text-emerald-600 text-[10px] font-bold">
+                  <i data-lucide="trending-up" class="w-3 h-3"></i> +32.4% vs prev period
+                </div>
+              </div>
+
+              <!-- Clicks -->
+              <div class="p-4 flex flex-col justify-between hover:bg-indigo-50/30 transition-colors">
+                <span class="text-xs font-medium text-slate-500">Clicks</span>
+                <div class="my-3">
+                  <h3 id="val-clicks" class="text-2xl lg:text-3xl font-bold text-slate-900 tracking-tight">26,381</h3>
+                </div>
+                <div class="flex items-center gap-1 text-emerald-600 text-[10px] font-bold">
+                  <i data-lucide="trending-up" class="w-3 h-3"></i> CTR 8.48% (High)
+                </div>
+              </div>
+
+              <!-- Orders -->
+              <div class="p-4 flex flex-col justify-between hover:bg-indigo-50/30 transition-colors">
+                <span class="text-xs font-medium text-slate-500">Orders</span>
+                <div class="my-3">
+                  <h3 id="val-orders" class="text-2xl lg:text-3xl font-bold text-slate-900 tracking-tight">241</h3>
+                </div>
+                <div class="flex items-center gap-1 text-emerald-600 text-[10px] font-bold">
+                  <i data-lucide="trending-up" class="w-3 h-3"></i> Net Conversions
+                </div>
+              </div>
+
+              <!-- Sales -->
+              <div class="p-4 flex flex-col justify-between hover:bg-indigo-50/30 transition-colors">
+                <span class="text-xs font-medium text-slate-500">Sales</span>
+                <div class="my-3">
+                  <h3 id="val-sales" class="text-2xl lg:text-3xl font-bold text-brand-700 tracking-tight">₹47789</h3>
+                </div>
+                <div class="flex items-center gap-1 text-emerald-600 text-[10px] font-bold">
+                  <i data-lucide="sparkles" class="w-3 h-3"></i> Net Realized
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+
+          <!-- Bottom Tabs: Duplicate Products & Customer Ratings (Matches Reference UI) -->
+          <div class="border-t border-slate-200 bg-slate-50/40">
+            <div class="flex border-b border-slate-200 px-5 gap-8 overflow-x-auto custom-scrollbar">
+              <button onclick="switchBottomTab('duplicates', this)" id="btab-duplicates" class="py-3 text-xs font-bold text-brand-700 border-b-2 border-brand-600 shrink-0">
+                Duplicate Products
+              </button>
+              <button onclick="switchBottomTab('ratings', this)" id="btab-ratings" class="py-3 text-xs font-medium text-slate-500 hover:text-slate-800 shrink-0">
+                Customer Ratings
+              </button>
+              <button onclick="switchBottomTab('rto-breakdown', this)" id="btab-rto" class="py-3 text-xs font-medium text-slate-500 hover:text-slate-800 flex items-center gap-1.5 shrink-0">
+                <span>RTO Risk Radar</span>
+                <span class="px-1.5 py-0.2 bg-emerald-100 text-emerald-800 rounded text-[9px] font-bold">Safe Pincodes</span>
+              </button>
+            </div>
+
+            <!-- Tab 1: Duplicate Products Analysis -->
+            <div class="p-5 bg-white">
+              <div id="subtab-duplicates" class="space-y-3">
+                <div class="flex flex-wrap items-center justify-between gap-2">
+                  <p class="text-xs text-slate-600">SellerPilot detected identical image matches & price undercutters across portals:</p>
+                  <span class="text-xs font-bold text-brand-700">3 Competitor Match Listings</span>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                  
+                  <div class="p-3.5 rounded-xl border border-rose-200 bg-rose-50/30 flex items-center justify-between">
+                    <div class="flex items-center gap-2.5">
+                      <span class="w-7 h-7 rounded-lg bg-meesho text-white font-black text-xs flex items-center justify-center">M</span>
+                      <div>
+                        <p class="text-xs font-bold text-slate-800">Seller: SuratHub99</p>
+                        <p class="text-[11px] text-slate-500">Price: <span class="font-bold text-rose-600">₹379</span> (-₹20 undercut)</p>
+                      </div>
+                    </div>
+                    <button onclick="showToast('⚡ Repriced Meesho to ₹375. Regained Rank #1!')" class="px-2.5 py-1 bg-brand-600 hover:bg-brand-700 text-white rounded-lg text-[11px] font-bold transition-colors">
+                      Auto-Match
+                    </button>
+                  </div>
+
+                  <div class="p-3.5 rounded-xl border border-emerald-200 bg-emerald-50/30 flex items-center justify-between">
+                    <div class="flex items-center gap-2.5">
+                      <span class="w-7 h-7 rounded-lg bg-flipkart text-white font-black text-xs flex items-center justify-center">F</span>
+                      <div>
+                        <p class="text-xs font-bold text-slate-800">Seller: KidsTrendz</p>
+                        <p class="text-[11px] text-slate-500">Price: <span class="font-bold text-emerald-700">₹449</span> (+₹50 higher)</p>
+                      </div>
+                    </div>
+                    <span class="text-[10px] font-bold text-emerald-800 bg-emerald-100 px-2 py-0.5 rounded border border-emerald-200">You Win BuyBox</span>
+                  </div>
+
+                  <div class="p-3.5 rounded-xl border border-slate-200 bg-slate-50 flex items-center justify-between">
+                    <div class="flex items-center gap-2.5">
+                      <span class="w-7 h-7 rounded-lg bg-amazon text-white font-black text-xs flex items-center justify-center">A</span>
+                      <div>
+                        <p class="text-xs font-bold text-slate-800">Seller: RoyalFabs</p>
+                        <p class="text-[11px] text-slate-500">Price: <span class="font-bold text-slate-800">₹399</span> (Matching)</p>
+                      </div>
+                    </div>
+                    <span class="text-[10px] font-medium text-slate-500">Prime Eligible</span>
+                  </div>
+
+                </div>
+              </div>
+
+              <!-- Tab 2: Customer Ratings (Hidden initially) -->
+              <div id="subtab-ratings" class="hidden space-y-3">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                  <div class="p-4 bg-amber-50/60 rounded-xl border border-amber-200 text-center flex flex-col items-center justify-center">
+                    <span class="text-3xl font-black text-amber-700">4.4 ★</span>
+                    <span class="text-xs text-slate-600 mt-1 font-semibold">1,840 Total Reviews</span>
+                    <span class="text-[10px] text-emerald-700 font-bold mt-0.5">Top 3% in Girls Sets</span>
+                  </div>
+                  <div class="md:col-span-3 space-y-2 text-xs">
+                    <div class="p-3 bg-slate-50 rounded-lg border border-slate-200">
+                      <div class="flex items-center justify-between font-bold text-slate-800">
+                        <span>"Fabric is 100% pure soft cotton for toddlers. No color bleeding after 4 washes."</span>
+                        <span class="text-amber-500 font-mono">★★★★★ (Meesho)</span>
+                      </div>
+                      <p class="text-[10px] text-slate-400 mt-0.5">Verified Buyer - Pooja Mehta, Jaipur (2 days ago)</p>
+                    </div>
+                    <div class="p-3 bg-slate-50 rounded-lg border border-slate-200">
+                      <div class="flex items-center justify-between font-bold text-slate-800">
+                        <span>"Exact fit as per size chart. Fast delivery on Amazon Prime."</span>
+                        <span class="text-amber-500 font-mono">★★★★☆ (Amazon)</span>
+                      </div>
+                      <p class="text-[10px] text-slate-400 mt-0.5">Verified Buyer - Ritesh Sharma, Delhi (1 week ago)</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Tab 3: RTO Risk Breakdown (Hidden initially) -->
+              <div id="subtab-rto" class="hidden space-y-3">
+                <div class="p-3.5 bg-emerald-50 border border-emerald-200 rounded-xl flex items-center justify-between text-xs">
+                  <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold">
+                      <i data-lucide="shield-check" class="w-5 h-5"></i>
+                    </div>
+                    <div>
+                      <p class="font-bold text-emerald-950">AI RTO Risk Estimate: 6.8% (Extremely Low)</p>
+                      <p class="text-emerald-800 text-[11px]">Surat apparel category benchmark is 22.4%. High ratings and accurate size chart prevent returns.</p>
+                    </div>
+                  </div>
+                  <button onclick="showToast('OTP COD Shield is currently active on all high-risk pin codes')" class="px-3 py-1.5 bg-emerald-700 text-white font-bold rounded-lg text-xs hover:bg-emerald-800">
+                    COD Shield Active
+                  </button>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+      <!-- ========================================================================= -->
+      <!-- TAB 2: 1-CLICK AI MULTI-MARKETPLACE LISTER (CORE SAAS DIFFERENTIATOR)    -->
+      <!-- ========================================================================= -->
+      <section id="tab-ai-lister" class="hidden space-y-5 max-w-7xl mx-auto">
+        
+        <!-- Header Banner -->
+        <div class="bg-gradient-to-r from-brand-950 via-slate-900 to-indigo-950 rounded-2xl p-6 text-white relative overflow-hidden shadow-lg border border-slate-800">
+          <div class="absolute right-0 top-0 translate-x-12 -translate-y-12 w-64 h-64 bg-brand-500/15 rounded-full blur-3xl pointer-events-none"></div>
+          
+          <div class="max-w-3xl relative z-10">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-brand-200 border border-white/10 text-xs font-bold mb-3">
+              <i data-lucide="sparkles" class="w-3.5 h-3.5 text-amber-300"></i>
+              <span>One Master Input &rarr; 3 Marketplace Compliant Listings</span>
+            </div>
+            <h1 class="text-2xl lg:text-3xl font-extrabold tracking-tight leading-snug">
+              Enter product details once. AI optimizes, structures, and creates ready-to-push listings for Meesho, Amazon India, and Flipkart.
+            </h1>
+            <p class="text-xs text-indigo-200 mt-2 font-medium">
+              Automatically generates SEO titles, bullet points, size charts, HSN/GST tags, and compliant attributes for each marketplace algorithm.
+            </p>
+          </div>
+        </div>
+
+        <!-- 2 Column Listing Studio -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+          
+          <!-- LEFT COLUMN: SINGLE PRODUCT INPUT & AI EXTRACTION -->
+          <div class="lg:col-span-5 space-y-4">
+            
+            <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-xs space-y-4">
+              
+              <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+                <h2 class="font-bold text-slate-900 text-sm flex items-center gap-2">
+                  <span class="w-6 h-6 rounded-lg bg-brand-100 text-brand-700 flex items-center justify-center text-xs font-bold">1</span>
+                  Master Product Information
+                </h2>
+                <div class="flex items-center gap-1.5">
+                  <button onclick="loadDemoSample('girls-set')" class="text-[11px] font-bold text-brand-700 bg-brand-50 hover:bg-brand-100 px-2 py-1 rounded transition-colors" title="Load Girls Floral Set">
+                    Girls Set
+                  </button>
+                  <button onclick="loadDemoSample('kurti-set')" class="text-[11px] font-bold text-slate-600 bg-slate-100 hover:bg-slate-200 px-2 py-1 rounded transition-colors" title="Load Cotton Kurti">
+                    Anarkali
+                  </button>
+                </div>
+              </div>
+
+              <!-- Quick Master Prompt Input -->
+              <div>
+                <label class="font-bold text-slate-700 block mb-1 text-xs">
+                  Raw Description / Seller Notes <span class="text-brand-600 font-semibold">(AI will extract all tags)</span>
+                </label>
+                <textarea id="inputRawPrompt" rows="3" class="w-full p-2.5 border border-slate-300 rounded-lg text-xs editor-field font-medium leading-relaxed" placeholder="e.g. Girls floral top and bottom set, cotton, red, age 2-8, ₹399, soft breathable daily wear">Girls floral top and bottom set, cotton, red, age 2-8, ₹399, high quality stitching, elastic waist, breathable summer wear</textarea>
+              </div>
+
+              <!-- Detailed Attributes -->
+              <div class="grid grid-cols-2 gap-3 text-xs">
+                <div>
+                  <label class="font-semibold text-slate-700 block mb-1">Base Price / Cost (₹)</label>
+                  <div class="relative">
+                    <span class="absolute left-2.5 top-2 text-slate-400 font-bold">₹</span>
+                    <input id="inputBaseCost" type="number" value="180" class="w-full pl-6 pr-2 py-1.5 border border-slate-300 rounded-lg text-xs font-bold editor-field" />
+                  </div>
+                </div>
+                <div>
+                  <label class="font-semibold text-slate-700 block mb-1">Target Selling Price (₹)</label>
+                  <div class="relative">
+                    <span class="absolute left-2.5 top-2 text-slate-400 font-bold">₹</span>
+                    <input id="inputTargetPrice" type="number" value="399" class="w-full pl-6 pr-2 py-1.5 border border-slate-300 rounded-lg text-xs font-bold text-brand-700 editor-field" />
+                  </div>
+                </div>
+              </div>
+
+              <div class="grid grid-cols-2 gap-3 text-xs">
+                <div>
+                  <label class="font-semibold text-slate-700 block mb-1">Primary Fabric</label>
+                  <input id="inputFabric" type="text" value="100% Pure Cambric Cotton" class="w-full px-2.5 py-1.5 border border-slate-300 rounded-lg text-xs editor-field" />
+                </div>
+                <div>
+                  <label class="font-semibold text-slate-700 block mb-1">Color / Variant</label>
+                  <input id="inputColor" type="text" value="Red / Floral Block Print" class="w-full px-2.5 py-1.5 border border-slate-300 rounded-lg text-xs editor-field" />
+                </div>
+              </div>
+
+              <div class="text-xs">
+                <label class="font-semibold text-slate-700 block mb-1">Available Sizes (Indian standard)</label>
+                <input id="inputSizes" type="text" value="2-3 Yrs, 3-4 Yrs, 4-5 Yrs, 5-6 Yrs, 7-8 Yrs" class="w-full px-2.5 py-1.5 border border-slate-300 rounded-lg text-xs editor-field font-medium" />
+              </div>
+
+              <!-- Product Image Simulation -->
+              <div class="text-xs">
+                <label class="font-semibold text-slate-700 block mb-1">Product Images (Simulated multi-upload)</label>
+                <div class="border-2 border-dashed border-slate-300 hover:border-brand-500 rounded-xl p-3 text-center cursor-pointer bg-slate-50/70 transition-colors">
+                  <div class="flex justify-center gap-2 mb-1.5">
+                    <img id="img-preview-1" src="https://images.unsplash.com/photo-1622290291468-a28f7a7dc6a8?w=100&auto=format&fit=crop&q=80" class="w-12 h-12 object-cover rounded-lg border border-slate-200 shadow-2xs" />
+                    <img id="img-preview-2" src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=100&auto=format&fit=crop&q=80" class="w-12 h-12 object-cover rounded-lg border border-slate-200 shadow-2xs" />
+                    <div class="w-12 h-12 rounded-lg bg-indigo-50 border border-indigo-200 flex items-center justify-center text-brand-700 font-bold text-xs">+3</div>
+                  </div>
+                  <p class="text-[10px] text-slate-500 font-medium">Auto-enhances to Amazon pure white background & Meesho 1:1 format</p>
+                </div>
+              </div>
+
+              <!-- AI EXTRACT & GENERATE BUTTON -->
+              <button id="btn-generate-ai" onclick="runAiListingEngine()" class="w-full py-3 bg-gradient-to-r from-brand-600 via-indigo-600 to-violet-600 hover:from-brand-700 hover:to-violet-700 text-white font-extrabold rounded-xl text-xs flex items-center justify-center gap-2 shadow-md shadow-brand-500/25 transition-all">
+                <i data-lucide="sparkles" class="w-4 h-4 text-amber-300"></i>
+                <span id="generate-btn-text">Generate All Marketplace Listings</span>
+              </button>
+
+            </div>
+
+            <!-- AI Extracted Meta Breakdown Card -->
+            <div class="bg-indigo-50/70 border border-indigo-200/80 rounded-xl p-4 text-xs space-y-2">
+              <div class="flex items-center justify-between">
+                <h3 class="font-bold text-indigo-950 flex items-center gap-1.5">
+                  <i data-lucide="cpu" class="w-4 h-4 text-brand-600"></i>
+                  AI Extracted Metadata
+                </h3>
+                <span class="text-[10px] font-mono font-bold text-brand-700 bg-white px-2 py-0.5 rounded border border-indigo-200">HSN: 6204 • GST: 5%</span>
+              </div>
+              <div class="grid grid-cols-2 gap-2 text-[11px] pt-1">
+                <div class="bg-white p-2 rounded-lg border border-indigo-100">
+                  <span class="text-slate-400 block text-[9px] uppercase font-bold">Category</span>
+                  <span id="meta-category" class="font-bold text-slate-800">Girls Clothing Sets</span>
+                </div>
+                <div class="bg-white p-2 rounded-lg border border-indigo-100">
+                  <span class="text-slate-400 block text-[9px] uppercase font-bold">Gender & Age</span>
+                  <span id="meta-gender" class="font-bold text-slate-800">Girls (2 - 8 Years)</span>
+                </div>
+                <div class="bg-white p-2 rounded-lg border border-indigo-100">
+                  <span class="text-slate-400 block text-[9px] uppercase font-bold">Material</span>
+                  <span id="meta-material" class="font-bold text-slate-800">100% Cambric Cotton</span>
+                </div>
+                <div class="bg-white p-2 rounded-lg border border-indigo-100">
+                  <span class="text-slate-400 block text-[9px] uppercase font-bold">Net Margin</span>
+                  <span id="meta-margin" class="font-bold text-emerald-700">₹148 (42.4% Profit)</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- RIGHT COLUMN: LIVE EDITABLE MARKETPLACE LISTINGS & COPY ACTIONS -->
+          <div class="lg:col-span-7 space-y-4">
+            
+            <div class="bg-white rounded-xl border border-slate-200 shadow-xs overflow-hidden">
+              
+              <!-- Channel Selector Tabs & Bulk Copy Actions -->
+              <div class="flex flex-wrap items-center justify-between border-b border-slate-200 bg-slate-50/80 p-2.5 gap-2">
+                
+                <div class="inline-flex rounded-lg border border-slate-200 p-0.5 bg-white shadow-2xs">
+                  <button onclick="switchListingChannel('meesho', this)" id="tab-btn-meesho" class="lister-channel-btn px-3 py-1.5 rounded-md text-xs font-bold text-meesho bg-purple-50 flex items-center gap-1.5 transition-all">
+                    <span class="w-2 h-2 rounded-full bg-meesho"></span> Meesho
+                  </button>
+                  <button onclick="switchListingChannel('amazon', this)" id="tab-btn-amazon" class="lister-channel-btn px-3 py-1.5 rounded-md text-xs font-semibold text-slate-600 hover:text-slate-900 flex items-center gap-1.5 transition-all">
+                    <span class="w-2 h-2 rounded-full bg-amber-500"></span> Amazon.in
+                  </button>
+                  <button onclick="switchListingChannel('flipkart', this)" id="tab-btn-flipkart" class="lister-channel-btn px-3 py-1.5 rounded-md text-xs font-semibold text-slate-600 hover:text-slate-900 flex items-center gap-1.5 transition-all">
+                    <span class="w-2 h-2 rounded-full bg-flipkart"></span> Flipkart
+                  </button>
+                </div>
+
+                <!-- Global Copy Buttons -->
+                <div class="flex items-center gap-1.5">
+                  <button onclick="copyCurrentMarketplace()" class="px-2.5 py-1 text-xs font-bold text-slate-700 bg-white border border-slate-300 hover:bg-slate-50 rounded-lg flex items-center gap-1 shadow-2xs transition-all">
+                    <i data-lucide="copy" class="w-3.5 h-3.5 text-slate-500"></i>
+                    <span id="copyCurrentBtnText">Copy Meesho</span>
+                  </button>
+                  <button onclick="copyAllMarketplaces()" class="px-2.5 py-1 text-xs font-bold text-white bg-slate-900 hover:bg-slate-800 rounded-lg flex items-center gap-1 shadow-2xs transition-all">
+                    <i data-lucide="copy-check" class="w-3.5 h-3.5 text-emerald-400"></i>
+                    <span>Copy All</span>
+                  </button>
+                </div>
+
+              </div>
+
+              <!-- ============================================== -->
+              <!-- 1. MEESHO LISTING FORMAT (Fully Editable)       -->
+              <!-- ============================================== -->
+              <div id="channel-content-meesho" class="p-5 space-y-4 text-xs">
+                
+                <div class="flex items-center justify-between pb-2 border-b border-slate-100">
+                  <span class="font-bold text-meesho flex items-center gap-1.5">
+                    <i data-lucide="layers" class="w-4 h-4"></i> Meesho Supplier Format (Single / Bulk CSV Ready)
+                  </span>
+                  <span class="text-[10px] font-bold text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded">Validation 100% Passed</span>
+                </div>
+
+                <div>
+                  <label class="font-bold text-slate-700 block mb-1">Optimized Meesho Product Title</label>
+                  <input type="text" id="meesho-title" class="w-full p-2.5 border border-slate-300 rounded-lg text-xs font-semibold editor-field" value="Pretty Stylish Girls Top & Bottom Sets (Pure Cotton Floral Print Red)" />
+                </div>
+
+                <div class="grid grid-cols-3 gap-3">
+                  <div>
+                    <label class="font-bold text-slate-700 block mb-1">Meesho Price</label>
+                    <div class="relative">
+                      <span class="absolute left-2.5 top-2 text-slate-400 font-bold">₹</span>
+                      <input type="number" id="meesho-price" value="399" class="w-full pl-6 pr-2 py-1.5 border border-slate-300 rounded-lg text-xs font-bold text-slate-900 editor-field" />
+                    </div>
+                  </div>
+                  <div>
+                    <label class="font-bold text-slate-700 block mb-1">Wrong Return Price</label>
+                    <div class="relative">
+                      <span class="absolute left-2.5 top-2 text-slate-400 font-bold">₹</span>
+                      <input type="number" id="meesho-return-price" value="379" class="w-full pl-6 pr-2 py-1.5 border border-slate-300 rounded-lg text-xs font-bold text-emerald-700 editor-field" />
+                    </div>
+                  </div>
+                  <div>
+                    <label class="font-bold text-slate-700 block mb-1">GST & HSN</label>
+                    <input type="text" id="meesho-hsn" value="HSN 6204 / 5% GST" class="w-full px-2.5 py-1.5 border border-slate-300 rounded-lg text-xs font-mono font-medium editor-field" />
+                  </div>
+                </div>
+
+                <div>
+                  <label class="font-bold text-slate-700 block mb-1">Meesho Product Description & Attributes</label>
+                  <textarea id="meesho-desc" rows="5" class="w-full p-2.5 border border-slate-300 rounded-lg text-xs font-mono leading-relaxed editor-field">Top Fabric: 100% Pure Cambric Cotton
+Bottom Fabric: Cotton with Comfort Soft Elastic Waist
+Sleeve Length: Sleeveless / Strappy Shoulder
+Pattern: Jaipuri Floral Hand Block Print
+Net Quantity (N): 1 Set (Top + Bottom Palazzo)
+Sizes Available: 2-3 Years, 3-4 Years, 4-5 Years, 5-6 Years, 7-8 Years
+Country of Origin: India</textarea>
+                </div>
+
+                <div class="flex items-center justify-between pt-2">
+                  <span class="text-[11px] text-slate-500 font-medium">Standard Indian Girl size-chart matrix auto-attached.</span>
+                  <button onclick="copyMarketplaceDirect('meesho')" class="px-3.5 py-1.5 bg-meesho text-white font-bold rounded-lg text-xs hover:opacity-95 flex items-center gap-1.5 transition-all shadow-xs">
+                    <i data-lucide="copy" class="w-3.5 h-3.5"></i> Copy Meesho Listing
+                  </button>
+                </div>
+
+              </div>
+
+              <!-- ============================================== -->
+              <!-- 2. AMAZON INDIA FORMAT (Fully Editable)       -->
+              <!-- ============================================== -->
+              <div id="channel-content-amazon" class="hidden p-5 space-y-4 text-xs">
+                
+                <div class="flex items-center justify-between pb-2 border-b border-slate-100">
+                  <span class="font-bold text-amber-700 flex items-center gap-1.5">
+                    <i data-lucide="layers" class="w-4 h-4"></i> Amazon.in (Brand / Flat File / SP-API Format)
+                  </span>
+                  <span class="text-[10px] font-bold text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded">ACOS & Search Term Indexed</span>
+                </div>
+
+                <div>
+                  <label class="font-bold text-slate-700 block mb-1">Amazon Search-Ranked Title (200 Chars)</label>
+                  <input type="text" id="amazon-title" class="w-full p-2.5 border border-slate-300 rounded-lg text-xs font-semibold editor-field" value="Jaipur Fab Girls Pure Cotton Floral Printed Top and Palazzo Bottom Set (Pack of 1, Red)" />
+                </div>
+
+                <div class="grid grid-cols-3 gap-3">
+                  <div>
+                    <label class="font-bold text-slate-700 block mb-1">Listing Price (₹)</label>
+                    <input type="number" id="amazon-price" value="599" class="w-full px-2.5 py-1.5 border border-slate-300 rounded-lg text-xs font-bold text-slate-900 editor-field" />
+                  </div>
+                  <div>
+                    <label class="font-bold text-slate-700 block mb-1">MRP (₹)</label>
+                    <input type="number" id="amazon-mrp" value="1299" class="w-full px-2.5 py-1.5 border border-slate-300 rounded-lg text-xs font-medium text-slate-500 editor-field" />
+                  </div>
+                  <div>
+                    <label class="font-bold text-slate-700 block mb-1">Fulfillment Channel</label>
+                    <select class="w-full px-2 py-1.5 border border-slate-300 rounded-lg text-xs editor-field">
+                      <option>Amazon Easy Ship</option>
+                      <option>FBA / Prime</option>
+                      <option>Self Ship</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div>
+                  <label class="font-bold text-slate-700 block mb-1">5 High-Converting Bullet Points</label>
+                  <textarea id="amazon-bullets" rows="5" class="w-full p-2.5 border border-slate-300 rounded-lg text-xs font-mono leading-relaxed editor-field">• 100% PURE BREATHABLE COTTON: Skin-friendly natural fabric keeps your baby girl comfortable all day in summer.
+• 2-PIECE COMPLETE CO-ORD SET: Includes 1 trendy flared peplum top and 1 matching elasticated palazzo trouser.
+• AUTHENTIC JAIPURI FLORAL PRINT: Colorfast dyes guaranteed not to bleed or fade during machine/hand wash.
+• PERFECT FOR OCCASIONS: Ideal for casual playtime, family outings, festive pujas, birthday gifts, and holidays.
+• AGE COMPLIANT FIT: Available from 2 Years up to 8 Years. Please refer to our uploaded size guide.</textarea>
+                </div>
+
+                <div>
+                  <label class="font-bold text-slate-700 block mb-1">Backend Search Keywords</label>
+                  <input type="text" id="amazon-keywords" value="girls dress, kids clothing set, cotton top bottom, jaipuri kids wear, baby girl summer clothes" class="w-full px-2.5 py-1.5 border border-slate-300 rounded-lg text-xs font-mono editor-field" />
+                </div>
+
+                <div class="flex items-center justify-between pt-2">
+                  <span class="text-[11px] text-slate-500 font-medium">Auto-formats for Amazon Flat File CSV & SP-API Push.</span>
+                  <button onclick="copyMarketplaceDirect('amazon')" class="px-3.5 py-1.5 bg-slate-900 text-white font-bold rounded-lg text-xs hover:bg-slate-800 flex items-center gap-1.5 transition-all shadow-xs">
+                    <i data-lucide="copy" class="w-3.5 h-3.5"></i> Copy Amazon Listing
+                  </button>
+                </div>
+
+              </div>
+
+              <!-- ============================================== -->
+              <!-- 3. FLIPKART FORMAT (Fully Editable)           -->
+              <!-- ============================================== -->
+              <div id="channel-content-flipkart" class="hidden p-5 space-y-4 text-xs">
+                
+                <div class="flex items-center justify-between pb-2 border-b border-slate-100">
+                  <span class="font-bold text-flipkart flex items-center gap-1.5">
+                    <i data-lucide="layers" class="w-4 h-4"></i> Flipkart Marketplace (FSN & Assured Specification)
+                  </span>
+                  <span class="text-[10px] font-bold text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded">Flipkart Assured Verified</span>
+                </div>
+
+                <div>
+                  <label class="font-bold text-slate-700 block mb-1">Flipkart Product Title</label>
+                  <input type="text" id="flipkart-title" class="w-full p-2.5 border border-slate-300 rounded-lg text-xs font-semibold editor-field" value="Girls Casual Top Trouser (Red, Pack of 1 Pure Cotton)" />
+                </div>
+
+                <div class="grid grid-cols-3 gap-3">
+                  <div>
+                    <label class="font-bold text-slate-700 block mb-1">Flipkart Price (₹)</label>
+                    <input type="number" id="flipkart-price" value="499" class="w-full px-2.5 py-1.5 border border-slate-300 rounded-lg text-xs font-bold text-slate-900 editor-field" />
+                  </div>
+                  <div>
+                    <label class="font-bold text-slate-700 block mb-1">Flipkart Assured Tag</label>
+                    <input type="text" value="Eligible (Tier 1 Seller)" class="w-full px-2.5 py-1.5 border border-slate-200 rounded-lg text-xs font-bold text-blue-700 bg-blue-50" readonly />
+                  </div>
+                  <div>
+                    <label class="font-bold text-slate-700 block mb-1">SLA Dispatch Time</label>
+                    <select class="w-full px-2 py-1.5 border border-slate-300 rounded-lg text-xs editor-field">
+                      <option>1 Day (Fast SLA)</option>
+                      <option>2 Days</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div>
+                  <label class="font-bold text-slate-700 block mb-1">Flipkart Mandatory Vertical Attributes</label>
+                  <div class="grid grid-cols-2 gap-2 text-[11px] p-2.5 bg-slate-50 rounded-lg border border-slate-200 font-mono">
+                    <div>Brand: Jaipur Fab</div>
+                    <div>Style Code: SP-GIRL-FLR-RED</div>
+                    <div>Type: Top & Palazzo Set</div>
+                    <div>Ideal For: Baby Girls</div>
+                    <div>Fabric Care: Gentle Wash</div>
+                    <div>Closure: Slip On</div>
+                  </div>
+                </div>
+
+                <div class="flex items-center justify-between pt-2">
+                  <span class="text-[11px] text-slate-500 font-medium">Category: Baby & Kids Apparel &rarr; Ethnic & Co-ord Sets</span>
+                  <button onclick="copyMarketplaceDirect('flipkart')" class="px-3.5 py-1.5 bg-flipkart text-white font-bold rounded-lg text-xs hover:bg-blue-700 flex items-center gap-1.5 transition-all shadow-xs">
+                    <i data-lucide="copy" class="w-3.5 h-3.5"></i> Copy Flipkart Listing
+                  </button>
+                </div>
+
+              </div>
+
+            </div>
+
+            <!-- Bulk 1-Click Push Everywhere -->
+            <div class="p-4 bg-gradient-to-r from-slate-900 via-brand-950 to-indigo-950 rounded-xl text-white flex flex-wrap items-center justify-between gap-3 shadow-md">
+              <div class="flex items-center gap-3">
+                <div class="w-9 h-9 rounded-lg bg-white/10 flex items-center justify-center text-amber-400 shrink-0">
+                  <i data-lucide="send" class="w-5 h-5"></i>
+                </div>
+                <div>
+                  <h4 class="font-bold text-xs">Publish to All 3 Marketplaces Simultaneously</h4>
+                  <p class="text-[11px] text-slate-300">Syncs unified master SKU across Meesho, Amazon and Flipkart in 1-click.</p>
+                </div>
+              </div>
+              <button onclick="publishAllChannels()" class="px-5 py-2.5 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white font-extrabold rounded-lg text-xs shadow-md shadow-emerald-500/20 flex items-center gap-2 transition-all">
+                <i data-lucide="rocket" class="w-4 h-4"></i>
+                <span>Push Listings Live</span>
+              </button>
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+      <!-- ======================================================== -->
+      <!-- TAB 3: MASTER PRODUCT LIBRARY (CATALOG DATABASE)          -->
+      <!-- ======================================================== -->
+      <section id="tab-products" class="hidden space-y-5 max-w-7xl mx-auto">
+        <div class="flex flex-wrap items-center justify-between gap-4">
+          <div>
+            <h1 class="text-xl font-extrabold text-slate-900">Master Product Library</h1>
+            <p class="text-xs text-slate-500">Manage your entire multi-channel product catalog with real-time sync across marketplaces</p>
+          </div>
+          <div class="flex items-center gap-2">
+            <button onclick="switchTab('ai-lister')" class="px-3.5 py-1.5 bg-brand-600 hover:bg-brand-700 text-white text-xs font-bold rounded-lg flex items-center gap-1.5 shadow-xs transition-all">
+              <i data-lucide="plus" class="w-3.5 h-3.5"></i> Add New Master Product
+            </button>
+            <button onclick="exportCatalogCSV()" class="px-3 py-1.5 bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 text-xs font-bold rounded-lg flex items-center gap-1.5 shadow-2xs transition-all">
+              <i data-lucide="download" class="w-3.5 h-3.5"></i> Export CSV
+            </button>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-xl border border-slate-200 overflow-hidden shadow-xs">
+          <div class="p-3.5 border-b border-slate-100 flex flex-wrap items-center justify-between gap-3">
+            <div class="flex items-center gap-2 flex-1 max-w-md">
+              <i data-lucide="search" class="w-4 h-4 text-slate-400"></i>
+              <input type="text" placeholder="Search by SKU, Product Name, Category or Portal ID..." class="w-full text-xs outline-none bg-transparent" />
+            </div>
+            <div class="flex items-center gap-2 text-xs text-slate-500 font-medium">
+              <span>Showing 4 of 142 Products</span>
+            </div>
+          </div>
+
+          <div class="overflow-x-auto custom-scrollbar">
+            <table class="w-full text-left text-xs">
+              <thead class="bg-slate-50 text-slate-500 font-bold border-b border-slate-200">
+                <tr>
+                  <th class="p-3">Product / Master SKU</th>
+                  <th class="p-3">Category</th>
+                  <th class="p-3">Base Cost</th>
+                  <th class="p-3">Marketplace Prices</th>
+                  <th class="p-3">Synced Portals</th>
+                  <th class="p-3">Stock Units</th>
+                  <th class="p-3 text-right">Actions</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-100">
+                
+                <tr class="hover:bg-slate-50 transition-colors">
+                  <td class="p-3">
+                    <div class="flex items-center gap-2.5">
+                      <img src="https://images.unsplash.com/photo-1622290291468-a28f7a7dc6a8?w=80&auto=format&fit=crop&q=80" class="w-9 h-9 object-cover rounded-lg border border-slate-200" />
+                      <div>
+                        <p class="font-bold text-slate-800">Pretty Stylish Girls Top & Bottom Sets</p>
+                        <p class="text-[10px] text-slate-400 font-mono">SKU: SP-FLORAL-G28</p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="p-3 text-slate-600 font-medium">Girls Ethnic Wear</td>
+                  <td class="p-3 font-bold text-slate-700">₹180</td>
+                  <td class="p-3">
+                    <div class="flex items-center gap-1.5 text-[11px] font-mono">
+                      <span class="text-meesho font-bold">M: ₹399</span> |
+                      <span class="text-amber-700 font-bold">A: ₹599</span> |
+                      <span class="text-flipkart font-bold">F: ₹499</span>
+                    </div>
+                  </td>
+                  <td class="p-3">
+                    <div class="flex items-center gap-1">
+                      <span class="px-1.5 py-0.2 bg-purple-100 text-meesho rounded text-[9px] font-bold">Meesho</span>
+                      <span class="px-1.5 py-0.2 bg-amber-100 text-amber-900 rounded text-[9px] font-bold">Amazon</span>
+                      <span class="px-1.5 py-0.2 bg-blue-100 text-flipkart rounded text-[9px] font-bold">Flipkart</span>
+                    </div>
+                  </td>
+                  <td class="p-3 font-bold text-slate-900">420 pcs</td>
+                  <td class="p-3 text-right">
+                    <button onclick="loadProductInLister('Pretty Stylish Girls Top & Bottom Sets', 399, 'Girls floral top and bottom set, cotton, red')" class="px-2.5 py-1 bg-brand-50 hover:bg-brand-100 text-brand-700 font-bold rounded text-[11px]">Edit / Re-List</button>
+                  </td>
+                </tr>
+
+                <tr class="hover:bg-slate-50 transition-colors">
+                  <td class="p-3">
+                    <div class="flex items-center gap-2.5">
+                      <img src="https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?w=80&auto=format&fit=crop&q=80" class="w-9 h-9 object-cover rounded-lg border border-slate-200" />
+                      <div>
+                        <p class="font-bold text-slate-800">Pure Cambric Cotton Anarkali Kurta Set</p>
+                        <p class="text-[10px] text-slate-400 font-mono">SKU: SP-ANK-BLU-M</p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="p-3 text-slate-600 font-medium">Women Ethnic Wear</td>
+                  <td class="p-3 font-bold text-slate-700">₹280</td>
+                  <td class="p-3">
+                    <div class="flex items-center gap-1.5 text-[11px] font-mono">
+                      <span class="text-meesho font-bold">M: ₹449</span> |
+                      <span class="text-amber-700 font-bold">A: ₹699</span> |
+                      <span class="text-flipkart font-bold">F: ₹599</span>
+                    </div>
+                  </td>
+                  <td class="p-3">
+                    <div class="flex items-center gap-1">
+                      <span class="px-1.5 py-0.2 bg-purple-100 text-meesho rounded text-[9px] font-bold">Meesho</span>
+                      <span class="px-1.5 py-0.2 bg-amber-100 text-amber-900 rounded text-[9px] font-bold">Amazon</span>
+                      <span class="px-1.5 py-0.2 bg-blue-100 text-flipkart rounded text-[9px] font-bold">Flipkart</span>
+                    </div>
+                  </td>
+                  <td class="p-3 font-bold text-amber-600">18 pcs (Low)</td>
+                  <td class="p-3 text-right">
+                    <button onclick="loadProductInLister('Pure Cambric Cotton Anarkali Kurta Set', 699, 'Women Cambric cotton anarkali sky blue floral pant dupatta')" class="px-2.5 py-1 bg-brand-50 hover:bg-brand-100 text-brand-700 font-bold rounded text-[11px]">Edit / Re-List</button>
+                  </td>
+                </tr>
+
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ======================================================== -->
+      <!-- TAB 4: UNIFIED ORDERS & RTO SHIELD                        -->
+      <!-- ======================================================== -->
+      <section id="tab-orders" class="hidden space-y-5 max-w-7xl mx-auto">
+        <div class="flex flex-wrap items-center justify-between gap-4">
+          <div>
+            <h1 class="text-xl font-extrabold text-slate-900">Unified Orders & RTO Risk Shield</h1>
+            <p class="text-xs text-slate-500">Real-time sync across Meesho, Amazon EasyShip, & Flipkart Ekart with AI return predictions</p>
+          </div>
+          <div class="flex items-center gap-2">
+            <button onclick="printBulkLabels()" class="px-3.5 py-1.5 bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold rounded-lg flex items-center gap-1.5 shadow-xs">
+              <i data-lucide="printer" class="w-3.5 h-3.5"></i> Print Unified Shipping Labels (18)
+            </button>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+          <div class="bg-white p-3.5 rounded-xl border border-slate-200 shadow-2xs">
+            <span class="text-slate-400 text-xs font-medium">Pending Dispatches</span>
+            <p class="text-xl font-black text-slate-900 mt-1">42 Orders</p>
+            <span class="text-[10px] text-amber-600 font-bold">Courier SLA: 3h 15m remaining</span>
+          </div>
+          <div class="bg-white p-3.5 rounded-xl border border-slate-200 shadow-2xs">
+            <span class="text-slate-400 text-xs font-medium">In-Transit Parcels</span>
+            <p class="text-xl font-black text-slate-900 mt-1">189 Units</p>
+            <span class="text-[10px] text-emerald-600 font-bold">96.8% On-Time Delivery</span>
+          </div>
+          <div class="bg-white p-3.5 rounded-xl border border-rose-200 bg-rose-50/20 shadow-2xs">
+            <span class="text-rose-600 text-xs font-bold">AI Flagged COD High RTO</span>
+            <p class="text-xl font-black text-rose-600 mt-1">4 Orders</p>
+            <span class="text-[10px] text-rose-500 font-semibold">Awaiting Buyer WhatsApp OTP</span>
+          </div>
+          <div class="bg-white p-3.5 rounded-xl border border-slate-200 shadow-2xs">
+            <span class="text-slate-400 text-xs font-medium">Returns Saved by Shield</span>
+            <p class="text-xl font-black text-emerald-600 mt-1">₹42,800</p>
+            <span class="text-[10px] text-slate-500 font-medium">Avoided two-way freight</span>
+          </div>
+        </div>
+
+        <!-- Orders Table -->
+        <div class="bg-white rounded-xl border border-slate-200 overflow-hidden shadow-xs">
+          <div class="overflow-x-auto custom-scrollbar">
+            <table class="w-full text-left text-xs">
+              <thead class="bg-slate-50 text-slate-500 font-bold border-b border-slate-200">
+                <tr>
+                  <th class="p-3">Portal</th>
+                  <th class="p-3">Order ID & Customer</th>
+                  <th class="p-3">Product Name / SKU</th>
+                  <th class="p-3">Amount</th>
+                  <th class="p-3">Type</th>
+                  <th class="p-3">AI RTO Risk Radar</th>
+                  <th class="p-3 text-right">Fulfillment Action</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-100">
+                
+                <tr class="hover:bg-slate-50 transition-colors">
+                  <td class="p-3">
+                    <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-purple-100 text-meesho border border-purple-200">Meesho</span>
+                  </td>
+                  <td class="p-3">
+                    <p class="font-bold text-slate-800">#MS-8932401</p>
+                    <p class="text-slate-400 text-[10px]">Patna, Bihar (800001)</p>
+                  </td>
+                  <td class="p-3 font-medium text-slate-800">
+                    Pretty Stylish Girls Sets (Size 28)
+                    <p class="text-[10px] text-slate-400 font-mono">SP-FLORAL-G28</p>
+                  </td>
+                  <td class="p-3 font-bold text-slate-900">₹399</td>
+                  <td class="p-3"><span class="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-50 text-amber-800 border border-amber-200">COD</span></td>
+                  <td class="p-3">
+                    <span class="inline-flex items-center gap-1 text-[11px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
+                      <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> 4.2% (Safe Pincode)
+                    </span>
+                  </td>
+                  <td class="p-3 text-right">
+                    <button onclick="showShippingLabelModal('#MS-8932401', 'Meesho', '₹399', 'Valmo Express / Shadowfax')" class="px-2.5 py-1 bg-brand-50 hover:bg-brand-100 text-brand-700 font-bold rounded text-[11px]">Print Label</button>
+                  </td>
+                </tr>
+
+                <tr class="bg-rose-50/40 hover:bg-rose-50/70 transition-colors">
+                  <td class="p-3">
+                    <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-purple-100 text-meesho border border-purple-200">Meesho</span>
+                  </td>
+                  <td class="p-3">
+                    <p class="font-bold text-rose-900">#MS-7719208</p>
+                    <p class="text-rose-600 text-[10px]">Motihari, Bihar (845401)</p>
+                  </td>
+                  <td class="p-3 font-medium text-slate-800">
+                    Girls Floral Top & Palazzos (Size 32)
+                    <p class="text-[10px] text-slate-400 font-mono">SP-FLORAL-G32</p>
+                  </td>
+                  <td class="p-3 font-bold text-slate-900">₹399</td>
+                  <td class="p-3"><span class="px-2 py-0.5 rounded text-[10px] font-bold bg-rose-100 text-rose-800 border border-rose-200">COD High Risk</span></td>
+                  <td class="p-3">
+                    <span class="inline-flex items-center gap-1 text-[11px] font-bold text-rose-700 bg-rose-100 px-2 py-0.5 rounded border border-rose-300 animate-pulse">
+                      <span class="w-1.5 h-1.5 rounded-full bg-rose-600"></span> 72% Predicted RTO
+                    </span>
+                  </td>
+                  <td class="p-3 text-right">
+                    <button onclick="showToast('📲 Automated WhatsApp address verification OTP sent to buyer phone!')" class="px-2.5 py-1 bg-rose-600 hover:bg-rose-700 text-white font-bold rounded text-[11px]">Send OTP Verify</button>
+                  </td>
+                </tr>
+
+                <tr class="hover:bg-slate-50 transition-colors">
+                  <td class="p-3">
+                    <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-100 text-amber-900 border border-amber-200">Amazon IN</span>
+                  </td>
+                  <td class="p-3">
+                    <p class="font-bold text-slate-800">#404-9218201-99</p>
+                    <p class="text-slate-400 text-[10px]">Bengaluru, KA (560001)</p>
+                  </td>
+                  <td class="p-3 font-medium text-slate-800">
+                    Pure Cambric Anarkali Kurta Set (M)
+                    <p class="text-[10px] text-slate-400 font-mono">SP-ANK-BLU-M</p>
+                  </td>
+                  <td class="p-3 font-bold text-slate-900">₹699</td>
+                  <td class="p-3"><span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-50 text-emerald-800 border border-emerald-200">Prepaid</span></td>
+                  <td class="p-3">
+                    <span class="inline-flex items-center gap-1 text-[11px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
+                      <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> 0% Risk (Prepaid)
+                    </span>
+                  </td>
+                  <td class="p-3 text-right">
+                    <button onclick="showShippingLabelModal('#404-9218201-99', 'Amazon IN', '₹699', 'ATS EasyShip Express')" class="px-2.5 py-1 bg-brand-50 hover:bg-brand-100 text-brand-700 font-bold rounded text-[11px]">EasyShip Label</button>
+                  </td>
+                </tr>
+
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ======================================================== -->
+      <!-- TAB 5: OMNI-INVENTORY BALANCER                           -->
+      <!-- ======================================================== -->
+      <section id="tab-inventory" class="hidden space-y-5 max-w-7xl mx-auto">
+        <div class="flex flex-wrap items-center justify-between gap-4">
+          <div>
+            <h1 class="text-xl font-extrabold text-slate-900">Omni-Channel Real-Time Stock Balancer</h1>
+            <p class="text-xs text-slate-500">Prevent out-of-stock seller tier penalties with automated multi-channel buffer allocation</p>
+          </div>
+          <button onclick="showToast('⚡ Stock rebalanced across Surat & Jaipur warehouses!')" class="px-3.5 py-1.5 bg-brand-600 hover:bg-brand-700 text-white text-xs font-bold rounded-lg flex items-center gap-1.5 shadow-xs">
+            <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i> Sync Stocks Across Channels
+          </button>
+        </div>
+
+        <div class="bg-white rounded-xl border border-slate-200 overflow-hidden shadow-xs">
+          <table class="w-full text-left text-xs">
+            <thead class="bg-slate-50 text-slate-500 font-bold border-b border-slate-200">
+              <tr>
+                <th class="p-3">Master SKU</th>
+                <th class="p-3">Product Name</th>
+                <th class="p-3">Physical Warehouse Stock</th>
+                <th class="p-3">Meesho Stock</th>
+                <th class="p-3">Amazon Stock</th>
+                <th class="p-3">Flipkart Stock</th>
+                <th class="p-3">Safety Buffer</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-100">
+              <tr>
+                <td class="p-3 font-mono font-bold text-slate-800">SP-FLORAL-G28</td>
+                <td class="p-3 font-semibold">Pretty Stylish Girls Top & Bottom Sets</td>
+                <td class="p-3 font-black text-slate-900">420 pcs</td>
+                <td class="p-3 text-meesho font-bold">220 pcs</td>
+                <td class="p-3 text-amber-700 font-bold">120 pcs</td>
+                <td class="p-3 text-flipkart font-bold">80 pcs</td>
+                <td class="p-3"><span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-100 text-emerald-800">Healthy Buffer</span></td>
+              </tr>
+              <tr>
+                <td class="p-3 font-mono font-bold text-slate-800">SP-ANK-BLU-M</td>
+                <td class="p-3 font-semibold">Cambric Cotton Anarkali Suit Set (M)</td>
+                <td class="p-3 font-black text-amber-600">18 pcs</td>
+                <td class="p-3 text-meesho font-bold">8 pcs</td>
+                <td class="p-3 text-amber-700 font-bold">6 pcs</td>
+                <td class="p-3 text-flipkart font-bold">4 pcs</td>
+                <td class="p-3"><span class="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-100 text-amber-800">Low Stock Alert</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ======================================================== -->
+      <!-- TAB 6: PAYOUTS & OVERCHARGE DISPUTES AUDIT               -->
+      <!-- ======================================================== -->
+      <section id="tab-payouts" class="hidden space-y-5 max-w-7xl mx-auto">
+        <div class="flex flex-wrap items-center justify-between gap-4">
+          <div>
+            <h1 class="text-xl font-extrabold text-slate-900">Payouts, Commissions & Weight Overcharge Audit</h1>
+            <p class="text-xs text-slate-500">Detect incorrect courier volumetric charges & auto-generate dispute evidence packets</p>
+          </div>
+          <button onclick="showToast('⚡ SellerPilot Auto-Claim bot filed 3 weight dispute tickets on Flipkart!')" class="px-3.5 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-lg flex items-center gap-1.5 shadow-xs">
+            <i data-lucide="shield-check" class="w-3.5 h-3.5"></i> Run Overcharge Auto-Claim
+          </button>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-2xs">
+            <span class="text-xs font-medium text-slate-500">Expected Bank Payouts (Next 7 Days)</span>
+            <h2 class="text-2xl font-black text-slate-900 mt-2">₹1,84,320</h2>
+            <div class="mt-3 space-y-1.5 text-xs text-slate-600">
+              <div class="flex justify-between"><span>Meesho (Zero Commission):</span> <span class="font-bold text-meesho">₹98,400</span></div>
+              <div class="flex justify-between"><span>Amazon IN (Bi-weekly):</span> <span class="font-bold text-amber-700">₹54,120</span></div>
+              <div class="flex justify-between"><span>Flipkart (Next payout):</span> <span class="font-bold text-flipkart">₹31,800</span></div>
+            </div>
+          </div>
+
+          <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-2xs">
+            <span class="text-xs font-medium text-slate-500">Net Estimated Profit (Post Deductions)</span>
+            <h2 class="text-2xl font-black text-emerald-600 mt-2">₹68,940 <span class="text-xs font-medium text-slate-500">(29.4% Margin)</span></h2>
+            <div class="mt-3 space-y-1.5 text-xs text-slate-600">
+              <div class="flex justify-between"><span>COGS (Fabric & Stitching):</span> <span class="font-medium text-slate-800">₹94,200</span></div>
+              <div class="flex justify-between"><span>Packaging & Courier:</span> <span class="font-medium text-slate-800">₹14,280</span></div>
+              <div class="flex justify-between"><span>Taxes & Marketplace Fees:</span> <span class="font-medium text-slate-800">₹6,900</span></div>
+            </div>
+          </div>
+
+          <div class="bg-white p-5 rounded-xl border border-rose-200 bg-rose-50/30 shadow-2xs">
+            <span class="text-xs font-bold text-rose-800 flex items-center gap-1.5">
+              <i data-lucide="alert-triangle" class="w-4 h-4 text-rose-600"></i> Disputed Overcharges Found
+            </span>
+            <h2 class="text-2xl font-black text-rose-600 mt-2">₹4,890</h2>
+            <p class="text-[11px] text-slate-600 mt-1">Found 4 instances where courier billed 1.5kg volumetric weight instead of actual 420g deadweight.</p>
+            <button onclick="showToast('📑 Weight Dispute Evidence PDF packet generated with packing timestamp proof!')" class="mt-3 w-full py-1.5 text-center text-xs font-bold bg-rose-600 hover:bg-rose-700 text-white rounded-lg transition-colors">
+              Generate Weight Dispute Evidence
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ======================================================== -->
+      <!-- TAB 7: REPORTS & EXPORTS                                 -->
+      <!-- ======================================================== -->
+      <section id="tab-reports" class="hidden space-y-5 max-w-7xl mx-auto">
+        <div class="flex flex-wrap items-center justify-between gap-4">
+          <div>
+            <h1 class="text-xl font-extrabold text-slate-900">Reports & Tax Compliance</h1>
+            <p class="text-xs text-slate-500">Download GSTR-1, marketplace reconciliation sheets, and SKU profitability reports</p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-2xs space-y-3">
+            <div class="w-8 h-8 rounded-lg bg-indigo-50 text-brand-600 flex items-center justify-center font-bold">
+              <i data-lucide="file-spreadsheet" class="w-4 h-4"></i>
+            </div>
+            <h3 class="font-bold text-slate-900 text-sm">GSTR-1 Multi-Channel Sales Report</h3>
+            <p class="text-xs text-slate-500">Unified B2C & B2B state-wise sales breakdown formatted for CA upload.</p>
+            <button onclick="showToast('📥 GSTR-1 Excel report downloaded successfully!')" class="w-full py-2 bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold text-xs rounded-lg transition-colors">Download GSTR-1 CSV</button>
+          </div>
+
+          <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-2xs space-y-3">
+            <div class="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold">
+              <i data-lucide="pie-chart" class="w-4 h-4"></i>
+            </div>
+            <h3 class="font-bold text-slate-900 text-sm">SKU-Wise Profit & Loss Audit</h3>
+            <p class="text-xs text-slate-500">Identifies which catalogs are making money and which ones bleed on RTO.</p>
+            <button onclick="showToast('📥 SKU Profitability Report downloaded!')" class="w-full py-2 bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold text-xs rounded-lg transition-colors">Download SKU P&L</button>
+          </div>
+
+          <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-2xs space-y-3">
+            <div class="w-8 h-8 rounded-lg bg-purple-50 text-purple-600 flex items-center justify-center font-bold">
+              <i data-lucide="shield-alert" class="w-4 h-4"></i>
+            </div>
+            <h3 class="font-bold text-slate-900 text-sm">RTO High-Risk Pincode Intelligence</h3>
+            <p class="text-xs text-slate-500">Comprehensive list of pin codes across India with high cancellation trends.</p>
+            <button onclick="showToast('📥 RTO Intelligence database downloaded!')" class="w-full py-2 bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold text-xs rounded-lg transition-colors">Download RTO Radar</button>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- MODAL 1: AUTHENTICATION (LOGIN, SIGNUP, FORGOT, PROFILE) -->
+  <!-- ======================================================== -->
+  <div id="authModal" class="hidden fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-xs flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl shadow-2xl border border-slate-200 w-full max-w-md overflow-hidden animate-in fade-in zoom-in duration-200">
+      
+      <div class="p-5 border-b border-slate-100 flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <div class="h-7 w-7 rounded-lg bg-brand-600 flex items-center justify-center text-white font-bold">
+            <i data-lucide="zap" class="w-4 h-4"></i>
+          </div>
+          <h3 id="authModalTitle" class="font-extrabold text-sm text-slate-900">Seller Authentication</h3>
+        </div>
+        <button onclick="closeAuthModal()" class="p-1 rounded-lg text-slate-400 hover:text-slate-700">
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+      </div>
+
+      <!-- VIEW: LOGIN -->
+      <div id="auth-view-login" class="p-5 space-y-3 text-xs">
+        <button onclick="simulateGoogleLogin()" class="w-full py-2.5 px-3 rounded-xl border border-slate-300 hover:bg-slate-50 flex items-center justify-center gap-2 font-bold text-slate-700 transition-colors shadow-2xs">
+          <svg class="w-4 h-4" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/></svg>
+          Continue with Google Account
+        </button>
+
+        <div class="flex items-center my-3 text-[10px] text-slate-400">
+          <div class="flex-1 border-t border-slate-200"></div>
+          <span class="px-2">or sign in with email</span>
+          <div class="flex-1 border-t border-slate-200"></div>
+        </div>
+
+        <div>
+          <label class="font-bold text-slate-700 block mb-1">Registered Email or GST Mobile</label>
+          <input type="email" id="login-email" value="seller@jaipurfabtrends.in" class="w-full p-2.5 border border-slate-300 rounded-lg editor-field" />
+        </div>
+        <div>
+          <label class="font-bold text-slate-700 block mb-1">Password</label>
+          <input type="password" value="••••••••••••" class="w-full p-2.5 border border-slate-300 rounded-lg editor-field" />
+        </div>
+
+        <div class="flex justify-between items-center text-[11px]">
+          <label class="flex items-center gap-1.5 cursor-pointer text-slate-600">
+            <input type="checkbox" checked class="rounded text-brand-600" /> Remember me
+          </label>
+          <button onclick="switchAuthView('forgot')" class="text-brand-600 font-bold hover:underline">Forgot password?</button>
+        </div>
+
+        <button onclick="handleLoginSubmit()" class="w-full py-2.5 bg-brand-600 hover:bg-brand-700 text-white font-extrabold rounded-xl transition-colors shadow-xs">
+          Sign In to SellerPilot
+        </button>
+
+        <p class="text-center text-[11px] text-slate-500 pt-2">
+          Don't have a verified account? <button onclick="switchAuthView('signup')" class="text-brand-600 font-bold hover:underline">Register GST Store</button>
+        </p>
+      </div>
+
+      <!-- VIEW: SIGNUP -->
+      <div id="auth-view-signup" class="hidden p-5 space-y-3 text-xs">
+        <div>
+          <label class="font-bold text-slate-700 block mb-1">Registered Business / Brand Name</label>
+          <input type="text" id="signup-name" placeholder="e.g. Surat Cotton Mills LLP" class="w-full p-2.5 border border-slate-300 rounded-lg editor-field" />
+        </div>
+        <div>
+          <label class="font-bold text-slate-700 block mb-1">GSTIN (15 Digit Number)</label>
+          <input type="text" id="signup-gst" placeholder="e.g. 24AAACH7409R1ZZ" class="w-full p-2.5 border border-slate-300 rounded-lg editor-field uppercase font-mono" />
+        </div>
+        <div class="grid grid-cols-2 gap-2">
+          <div>
+            <label class="font-bold text-slate-700 block mb-1">Official Email</label>
+            <input type="email" id="signup-email" placeholder="owner@store.com" class="w-full p-2.5 border border-slate-300 rounded-lg editor-field" />
+          </div>
+          <div>
+            <label class="font-bold text-slate-700 block mb-1">Phone (WhatsApp OTP)</label>
+            <input type="tel" id="signup-phone" placeholder="9876543210" class="w-full p-2.5 border border-slate-300 rounded-lg editor-field" />
+          </div>
+        </div>
+        <div>
+          <label class="font-bold text-slate-700 block mb-1">Create Password</label>
+          <input type="password" placeholder="Minimum 8 characters" class="w-full p-2.5 border border-slate-300 rounded-lg editor-field" />
+        </div>
+
+        <button onclick="handleSignupSubmit()" class="w-full py-2.5 bg-brand-600 hover:bg-brand-700 text-white font-extrabold rounded-xl transition-colors shadow-xs">
+          Create SellerPilot Account & 1,000 Free Credits
+        </button>
+
+        <p class="text-center text-[11px] text-slate-500">
+          Already registered? <button onclick="switchAuthView('login')" class="text-brand-600 font-bold hover:underline">Sign In</button>
+        </p>
+      </div>
+
+      <!-- VIEW: FORGOT PASSWORD -->
+      <div id="auth-view-forgot" class="hidden p-5 space-y-3 text-xs">
+        <p class="text-slate-600 text-[11px]">Enter your registered GST email or phone number to receive a secure login OTP token.</p>
+        <div>
+          <label class="font-bold text-slate-700 block mb-1">Registered Email</label>
+          <input type="email" placeholder="seller@store.in" class="w-full p-2.5 border border-slate-300 rounded-lg editor-field" />
+        </div>
+        <button onclick="showToast('🔑 Password reset link sent to your registered email!'); switchAuthView('login');" class="w-full py-2.5 bg-brand-600 hover:bg-brand-700 text-white font-extrabold rounded-xl transition-colors shadow-xs">
+          Send Recovery Link
+        </button>
+        <div class="text-center">
+          <button onclick="switchAuthView('login')" class="text-[11px] text-slate-500 font-bold hover:underline">Back to Sign In</button>
+        </div>
+      </div>
+
+      <!-- VIEW: SELLER PROFILE -->
+      <div id="auth-view-profile" class="hidden p-5 space-y-3 text-xs">
+        <div class="p-3 bg-indigo-50 border border-indigo-200 rounded-xl flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-brand-600 text-white font-extrabold text-sm flex items-center justify-center">JF</div>
+          <div>
+            <h4 class="font-extrabold text-indigo-950 text-xs" id="prof-display-name">Jaipur Fab Trends Pvt Ltd</h4>
+            <p class="text-[10px] text-indigo-700 font-mono" id="prof-display-gst">GSTIN: 08ABCDE1234F1Z5</p>
+          </div>
+        </div>
+
+        <div>
+          <label class="font-bold text-slate-700 block mb-1">Business Name</label>
+          <input type="text" id="prof-name" value="Jaipur Fab Trends Pvt Ltd" class="w-full p-2 border border-slate-300 rounded-lg editor-field font-semibold" />
+        </div>
+        <div class="grid grid-cols-2 gap-2">
+          <div>
+            <label class="font-bold text-slate-700 block mb-1">GSTIN</label>
+            <input type="text" id="prof-gst" value="08ABCDE1234F1Z5" class="w-full p-2 border border-slate-300 rounded-lg editor-field font-mono font-bold" />
+          </div>
+          <div>
+            <label class="font-bold text-slate-700 block mb-1">Phone</label>
+            <input type="text" value="+91 98290 12345" class="w-full p-2 border border-slate-300 rounded-lg editor-field" />
+          </div>
+        </div>
+        <div>
+          <label class="font-bold text-slate-700 block mb-1">Warehouse Address (Return Pickup)</label>
+          <input type="text" value="Plot 42, Sitapura Industrial Area, Jaipur, Rajasthan - 302022" class="w-full p-2 border border-slate-300 rounded-lg editor-field text-[11px]" />
+        </div>
+
+        <button onclick="saveProfileChanges()" class="w-full py-2.5 bg-brand-600 hover:bg-brand-700 text-white font-extrabold rounded-xl transition-colors shadow-xs">
+          Save Profile Changes
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- MODAL 2: MANIFEST V3 CHROME EXTENSION LIVE SIMULATION                     -->
+  <!-- ========================================================================= -->
+  <div id="chromeModal" class="hidden fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-xs flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl shadow-2xl border border-slate-200 w-full max-w-md overflow-hidden animate-in fade-in zoom-in duration-200">
+      
+      <!-- Chrome Extension Native Titlebar -->
+      <div class="bg-slate-900 px-4 py-3 text-white flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <div class="h-6 w-6 rounded-md bg-brand-600 flex items-center justify-center text-white shadow-2xs">
+            <i data-lucide="zap" class="w-3.5 h-3.5"></i>
+          </div>
+          <div>
+            <span class="font-bold text-xs">SellerPilot Chrome Extension</span>
+            <span class="text-[9px] text-emerald-400 font-mono block -mt-0.5">Active on meesho.com/supplier</span>
+          </div>
+        </div>
+        <button onclick="toggleChromeExtModal()" class="text-slate-400 hover:text-white p-1 rounded">
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+      </div>
+
+      <!-- Extension Content Body -->
+      <div class="p-4 space-y-3.5 text-xs">
+        
+        <!-- Live Page Scraped Info -->
+        <div class="p-3 rounded-xl bg-indigo-50/80 border border-indigo-200 flex items-center justify-between">
+          <div class="flex items-center gap-2.5">
+            <img src="https://images.unsplash.com/photo-1622290291468-a28f7a7dc6a8?w=80&auto=format&fit=crop&q=80" class="w-9 h-9 object-cover rounded-lg border border-slate-200" />
+            <div>
+              <p class="font-bold text-slate-800">Detected Product on Screen</p>
+              <p class="text-[11px] text-slate-500 font-medium">"Pretty Stylish Girls Floral Set"</p>
+            </div>
+          </div>
+          <span class="px-2 py-0.5 bg-brand-600 text-white font-extrabold rounded text-[9px]">1-CLICK SYNC</span>
+        </div>
+
+        <!-- 3 Quick Extension Actions -->
+        <div class="space-y-2">
+          <p class="font-bold text-slate-800 text-[11px] uppercase tracking-wider">Instant Chrome Automations</p>
+          
+          <button onclick="syncFromExtension()" class="w-full p-2.5 rounded-xl border border-slate-200 hover:border-brand-500 hover:bg-brand-50/60 flex items-center justify-between transition-colors text-left group">
+            <div class="flex items-center gap-2.5">
+              <div class="w-7 h-7 rounded-lg bg-violet-100 text-violet-700 flex items-center justify-center font-bold">
+                <i data-lucide="wand-2" class="w-4 h-4"></i>
+              </div>
+              <div>
+                <p class="font-bold text-slate-800 group-hover:text-brand-700">Auto-Extract & Multi-List to Amazon + Flipkart</p>
+                <p class="text-[10px] text-slate-400">Pulls HD images, tags & specs into SellerPilot AI Lister</p>
+              </div>
+            </div>
+            <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
+          </button>
+
+          <button onclick="showToast('🕵️ Competitor Spy: Scraped 10 Best-Sellers! Est. monthly volume: 14,200 units.')" class="w-full p-2.5 rounded-xl border border-slate-200 hover:border-brand-500 hover:bg-brand-50/60 flex items-center justify-between transition-colors text-left group">
+            <div class="flex items-center gap-2.5">
+              <div class="w-7 h-7 rounded-lg bg-indigo-100 text-indigo-700 flex items-center justify-center font-bold">
+                <i data-lucide="eye" class="w-4 h-4"></i>
+              </div>
+              <div>
+                <p class="font-bold text-slate-800 group-hover:text-brand-700">Spy on Category Competitor Prices</p>
+                <p class="text-[10px] text-slate-400">View real sales volume & price undercutters</p>
+              </div>
+            </div>
+            <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
+          </button>
+
+          <button onclick="showToast('🧮 Freight Calculator: Estimated Valmo/Shadowfax cost is ₹38 per parcel.')" class="w-full p-2.5 rounded-xl border border-slate-200 hover:border-brand-500 hover:bg-brand-50/60 flex items-center justify-between transition-colors text-left group">
+            <div class="flex items-center gap-2.5">
+              <div class="w-7 h-7 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold">
+                <i data-lucide="calculator" class="w-4 h-4"></i>
+              </div>
+              <div>
+                <p class="font-bold text-slate-800 group-hover:text-brand-700">Live Courier & Return Freight Calculator</p>
+                <p class="text-[10px] text-slate-400">Calculates accurate reverse logistics risk</p>
+              </div>
+            </div>
+            <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
+          </button>
+        </div>
+
+        <div class="pt-2 border-t border-slate-100 flex items-center justify-between text-[10px] text-slate-500">
+          <span>SellerPilot Extension v2.4 (MV3 Compliant)</span>
+          <button onclick="openManifestCodeModal()" class="text-brand-600 font-bold hover:underline">View Source JSON</button>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- MODAL 3: MANIFEST V3 SOURCE CODE VIEWER                                   -->
+  <!-- ========================================================================= -->
+  <div id="manifestCodeModal" class="hidden fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-xs flex items-center justify-center p-4">
+    <div class="bg-slate-900 text-white rounded-2xl shadow-2xl border border-slate-800 w-full max-w-lg overflow-hidden animate-in fade-in zoom-in duration-200">
+      <div class="p-4 border-b border-slate-800 flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <i data-lucide="code-2" class="w-4 h-4 text-indigo-400"></i>
+          <h3 class="font-bold text-xs">Chrome Extension Manifest V3 (`manifest.json`)</h3>
+        </div>
+        <button onclick="closeManifestCodeModal()" class="text-slate-400 hover:text-white">
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+      </div>
+      <div class="p-4 bg-slate-950 font-mono text-[11px] leading-relaxed text-indigo-300 max-h-80 overflow-y-auto custom-scrollbar">
+<pre>{
+  "manifest_version": 3,
+  "name": "SellerPilot - Multi-Marketplace E-commerce OS",
+  "version": "2.4.0",
+  "description": "List Faster. Sell Smarter on Meesho, Amazon India & Flipkart.",
+  "permissions": ["activeTab", "storage", "scripting"],
+  "host_permissions": [
+    "https://supplier.meesho.com/*",
+    "https://sellercentral.amazon.in/*",
+    "https://seller.flipkart.com/*"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": "icons/icon128.png"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://*.meesho.com/*", "*://*.amazon.in/*", "*://*.flipkart.com/*"],
+      "js": ["content.js"]
+    }
+  ]
+}</pre>
+      </div>
+      <div class="p-3 bg-slate-900 border-t border-slate-800 flex justify-between items-center text-xs">
+        <span class="text-slate-400 text-[11px]">Production ready for Chrome Web Store</span>
+        <button onclick="showToast('📋 Manifest JSON copied to clipboard!'); closeManifestCodeModal();" class="px-3 py-1 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-lg text-xs">
+          Copy Manifest Code
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- MODAL 4: SHIPPING LABEL PREVIEW & PRINT                  -->
+  <!-- ======================================================== -->
+  <div id="shippingModal" class="hidden fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-xs flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl shadow-2xl border border-slate-200 w-full max-w-md overflow-hidden animate-in fade-in zoom-in duration-200">
+      <div class="p-4 border-b border-slate-100 flex items-center justify-between">
+        <h3 class="font-bold text-xs text-slate-900 flex items-center gap-1.5">
+          <i data-lucide="printer" class="w-4 h-4 text-brand-600"></i>
+          Unified Shipping Label Preview
+        </h3>
+        <button onclick="closeShippingLabelModal()" class="text-slate-400 hover:text-slate-700">
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+      </div>
+      <div class="p-5 space-y-3 font-mono text-xs">
+        <div class="border-2 border-dashed border-slate-300 p-4 rounded-xl space-y-2 bg-slate-50/50">
+          <div class="flex justify-between items-center border-b border-slate-200 pb-2">
+            <span class="font-black text-sm" id="lbl-carrier">SHADOWFAX / VALMO</span>
+            <span class="font-bold text-brand-700" id="lbl-portal">MEESHO SHIP</span>
+          </div>
+          <div class="py-1">
+            <p class="text-[10px] text-slate-400">AWB / TRACKING BARCODE:</p>
+            <div class="h-10 bg-slate-900 rounded my-1 flex items-center justify-center text-white tracking-widest text-xs font-mono">
+              ||| | |||| ||| ||||| ||||| || |
+            </div>
+            <p class="text-[10px] text-center font-bold text-slate-700">AWB8932401899IN</p>
+          </div>
+          <div class="text-[11px] pt-1">
+            <p><strong>Order:</strong> <span id="lbl-order">#MS-8932401</span></p>
+            <p><strong>To:</strong> Pooja Mehta, Flat 402, Gandhi Nagar, Patna - 800001</p>
+            <p><strong>Item:</strong> Pretty Stylish Girls Top & Bottom (SP-FLORAL-G28)</p>
+            <p><strong>Collect Amount:</strong> <span id="lbl-price" class="font-bold">₹399</span></p>
+          </div>
+        </div>
+      </div>
+      <div class="p-4 bg-slate-50 border-t border-slate-100 flex justify-end gap-2">
+        <button onclick="closeShippingLabelModal()" class="px-3 py-1.5 border border-slate-300 hover:bg-slate-100 rounded-lg text-xs font-bold text-slate-700">Cancel</button>
+        <button onclick="showToast('🖨️ Printing thermal shipping label...'); closeShippingLabelModal();" class="px-4 py-1.5 bg-slate-900 hover:bg-slate-800 text-white font-bold rounded-lg text-xs flex items-center gap-1.5">
+          <i data-lucide="printer" class="w-3.5 h-3.5"></i> Print 4x6 Label
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- TOAST NOTIFICATION CONTAINER                             -->
+  <!-- ======================================================== -->
+  <div id="toast" class="fixed bottom-5 right-5 z-50 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none">
+    <div class="bg-slate-900 text-white px-4 py-3 rounded-xl shadow-2xl flex items-center gap-3 border border-slate-700 text-xs font-bold">
+      <div class="w-2 h-2 rounded-full bg-emerald-400 badge-pulse"></div>
+      <span id="toast-msg">Action completed successfully!</span>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- JAVASCRIPT APPLICATION CONTROLLER & REACTIVE WORKFLOWS                    -->
+  <!-- ========================================================================= -->
+  <script>
+    // Initialize Lucide Icons
+    lucide.createIcons();
+
+    // ==========================================
+    // 1. DATASETS & CHART CONFIG (From Reference)
+    // ==========================================
+    const analyticsData = {
+      views: {
+        labels: ['3 Sep', '5 Sep', '8 Sep', '10 Sep', '13 Sep', '15 Sep', '18 Sep', '20 Sep', '23 Sep', '26 Sep', '28 Sep', '30 Sep'],
+        data: [4.2, 5.0, 12.1, 14.5, 9.8, 8.2, 13.0, 21.2, 12.0, 24.5, 9.8, 0.4],
+        label: 'Views (Thousands)',
+        color: '#4f46e5',
+        bgColor: 'rgba(79, 70, 229, 0.08)'
+      },
+      clicks: {
+        labels: ['3 Sep', '5 Sep', '8 Sep', '10 Sep', '13 Sep', '15 Sep', '18 Sep', '20 Sep', '23 Sep', '26 Sep', '28 Sep', '30 Sep'],
+        data: [0.6, 0.9, 2.2, 2.8, 1.6, 1.2, 2.0, 3.9, 1.9, 4.3, 1.8, 0.2],
+        label: 'Clicks (Thousands)',
+        color: '#0ea5e9',
+        bgColor: 'rgba(14, 165, 233, 0.08)'
+      },
+      orders: {
+        labels: ['3 Sep', '5 Sep', '8 Sep', '10 Sep', '13 Sep', '15 Sep', '18 Sep', '20 Sep', '23 Sep', '26 Sep', '28 Sep', '30 Sep'],
+        data: [8, 14, 26, 35, 18, 14, 28, 44, 21, 49, 19, 2],
+        label: 'Net Orders',
+        color: '#10b981',
+        bgColor: 'rgba(16, 185, 129, 0.08)'
+      },
+      sales: {
+        labels: ['3 Sep', '5 Sep', '8 Sep', '10 Sep', '13 Sep', '15 Sep', '18 Sep', '20 Sep', '23 Sep', '26 Sep', '28 Sep', '30 Sep'],
+        data: [1.6, 2.8, 5.2, 7.0, 3.6, 2.8, 5.6, 8.8, 4.2, 9.8, 3.8, 0.6],
+        label: 'Sales (₹ Thousands)',
+        color: '#8b5cf6',
+        bgColor: 'rgba(139, 92, 246, 0.08)'
+      }
+    };
+
+    let activeMetric = 'views';
+    let currentChannelInView = 'meesho';
+    let healthChartInstance = null;
+
+    // Initialize Chart.js
+    function initChart() {
+      const ctx = document.getElementById('healthChart').getContext('2d');
+      const metric = analyticsData[activeMetric];
+
+      healthChartInstance = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: metric.labels,
+          datasets: [{
+            label: metric.label,
+            data: metric.data,
+            borderColor: metric.color,
+            backgroundColor: metric.bgColor,
+            borderWidth: 2.5,
+            fill: true,
+            tension: 0.35,
+            pointBackgroundColor: '#ffffff',
+            pointBorderColor: metric.color,
+            pointBorderWidth: 2.5,
+            pointRadius: 4.5,
+            pointHoverRadius: 7
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              backgroundColor: '#0f172a',
+              titleFont: { size: 12, family: 'Plus Jakarta Sans', weight: 'bold' },
+              bodyFont: { size: 12, family: 'Plus Jakarta Sans' },
+              padding: 10,
+              cornerRadius: 8,
+              displayColors: false,
+              callbacks: {
+                label: function(context) {
+                  if (activeMetric === 'views' || activeMetric === 'clicks') return `${context.parsed.y}k ${activeMetric}`;
+                  if (activeMetric === 'sales') return `₹${(context.parsed.y * 1000).toLocaleString()}`;
+                  return `${context.parsed.y} orders`;
+                }
+              }
+            }
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              grid: { color: '#f1f5f9' },
+              ticks: {
+                color: '#94a3b8',
+                font: { size: 10 },
+                callback: function(val) {
+                  if (activeMetric === 'views' || activeMetric === 'clicks') return val + 'K';
+                  if (activeMetric === 'sales') return '₹' + val + 'K';
+                  return val;
+                }
+              }
+            },
+            x: {
+              grid: { display: false },
+              ticks: { color: '#94a3b8', font: { size: 10 } }
+            }
+          }
+        }
+      });
+    }
+
+    // Switch Metric (Views, Clicks, Orders, Sales)
+    function switchMetric(metricKey, btnElement) {
+      activeMetric = metricKey;
+      document.querySelectorAll('.metric-btn').forEach(btn => {
+        btn.classList.remove('bg-brand-600', 'text-white', 'shadow-xs', 'font-bold');
+        btn.classList.add('text-slate-600', 'font-semibold');
+      });
+      btnElement.classList.add('bg-brand-600', 'text-white', 'shadow-xs', 'font-bold');
+      btnElement.classList.remove('text-slate-600', 'font-semibold');
+
+      const config = analyticsData[metricKey];
+      healthChartInstance.data.datasets[0].data = config.data;
+      healthChartInstance.data.datasets[0].borderColor = config.color;
+      healthChartInstance.data.datasets[0].backgroundColor = config.bgColor;
+      healthChartInstance.data.datasets[0].pointBorderColor = config.color;
+      healthChartInstance.data.datasets[0].label = config.label;
+      healthChartInstance.update();
+    }
+
+    // Update Date Range Selector
+    function updateChartData() {
+      const days = document.getElementById('timeRangeSelect').value;
+      const dateText = document.getElementById('dateRangeText');
+
+      if (days === "7") {
+        dateText.innerText = "(24 Sep '26 - 30 Sep '26)";
+        document.getElementById('val-views').innerText = "84,120";
+        document.getElementById('val-clicks').innerText = "7,920";
+        document.getElementById('val-orders').innerText = "68";
+        document.getElementById('val-sales').innerText = "₹13,840";
+      } else if (days === "90") {
+        dateText.innerText = "(1 Jul '26 - 30 Sep '26)";
+        document.getElementById('val-views').innerText = "940,210";
+        document.getElementById('val-clicks').innerText = "81,420";
+        document.getElementById('val-orders').innerText = "749";
+        document.getElementById('val-sales').innerText = "₹1,48,200";
+      } else {
+        dateText.innerText = "(3 Sept '26 - 2 Oct '26)";
+        document.getElementById('val-views').innerText = "310,773";
+        document.getElementById('val-clicks').innerText = "26,381";
+        document.getElementById('val-orders').innerText = "241";
+        document.getElementById('val-sales').innerText = "₹47789";
+      }
+      showToast(`Showing catalog analytics for last ${days} days`);
+    }
+
+    // Marketplace Channel Filter
+    function setMarketplaceFilter(channel, btn) {
+      document.querySelectorAll('.mkt-filter').forEach(b => {
+        b.classList.remove('bg-white', 'text-slate-900', 'shadow-2xs', 'font-bold');
+        b.classList.add('text-slate-600', 'font-medium');
+      });
+      btn.classList.add('bg-white', 'text-slate-900', 'shadow-2xs', 'font-bold');
+      btn.classList.remove('text-slate-600', 'font-medium');
+      showToast(`Filtered metrics for channel: ${channel.toUpperCase()}`);
+    }
+
+    // Bottom Subtabs (Duplicate Products / Customer Ratings / RTO)
+    function switchBottomTab(tabKey, btn) {
+      document.getElementById('subtab-duplicates').classList.add('hidden');
+      document.getElementById('subtab-ratings').classList.add('hidden');
+      document.getElementById('subtab-rto').classList.add('hidden');
+
+      document.querySelectorAll('#btab-duplicates, #btab-ratings, #btab-rto').forEach(b => {
+        b.classList.remove('text-brand-700', 'border-b-2', 'border-brand-600', 'font-bold');
+        b.classList.add('text-slate-500', 'font-medium');
+      });
+
+      document.getElementById(`subtab-${tabKey}`).classList.remove('hidden');
+      btn.classList.add('text-brand-700', 'border-b-2', 'border-brand-600', 'font-bold');
+      btn.classList.remove('text-slate-500', 'font-medium');
+    }
+
+    // ========================================================
+    // 2. CORE DIFFERENTIATOR: AI MULTI-LISTING ENGINE LOGIC
+    // ========================================================
+    function switchListingChannel(channel, btn) {
+      currentChannelInView = channel;
+      document.querySelectorAll('.lister-channel-btn').forEach(b => {
+        b.classList.remove('bg-purple-50', 'bg-amber-50', 'bg-blue-50', 'text-meesho', 'text-amber-700', 'text-flipkart', 'font-bold');
+        b.classList.add('text-slate-600', 'font-semibold');
+      });
+
+      document.getElementById('channel-content-meesho').classList.add('hidden');
+      document.getElementById('channel-content-amazon').classList.add('hidden');
+      document.getElementById('channel-content-flipkart').classList.add('hidden');
+
+      btn.classList.add('font-bold');
+      btn.classList.remove('text-slate-600', 'font-semibold');
+
+      const copyText = document.getElementById('copyCurrentBtnText');
+
+      if (channel === 'meesho') {
+        btn.classList.add('bg-purple-50', 'text-meesho');
+        copyText.innerText = 'Copy Meesho';
+      } else if (channel === 'amazon') {
+        btn.classList.add('bg-amber-50', 'text-amber-700');
+        copyText.innerText = 'Copy Amazon';
+      } else if (channel === 'flipkart') {
+        btn.classList.add('bg-blue-50', 'text-flipkart');
+        copyText.innerText = 'Copy Flipkart';
+      }
+
+      document.getElementById(`channel-content-${channel}`).classList.remove('hidden');
+    }
+
+    // AI Listing Generation Simulation
+    function runAiListingEngine() {
+      const prompt = document.getElementById('inputRawPrompt').value;
+      const targetPrice = document.getElementById('inputTargetPrice').value || 399;
+      const btn = document.getElementById('btn-generate-ai');
+      const btnText = document.getElementById('generate-btn-text');
+
+      btn.disabled = true;
+      btnText.innerText = 'AI Extracting Specs & Generating 3 Marketplace Formats...';
+
+      setTimeout(() => {
+        btn.disabled = false;
+        btnText.innerText = 'Regenerate All Marketplace Listings';
+
+        // Update Metadata Preview
+        if (prompt.toLowerCase().includes('kurta') || prompt.toLowerCase().includes('anarkali')) {
+          document.getElementById('meta-category').innerText = "Women Ethnic Sets";
+          document.getElementById('meta-gender').innerText = "Women (Adult)";
+          document.getElementById('meta-material').innerText = document.getElementById('inputFabric').value;
+          document.getElementById('meta-margin').innerText = `₹${Math.round(targetPrice * 0.42)} (42% Net Profit)`;
+
+          document.getElementById('meesho-title').value = `Fabulous Women Pure Cotton Anarkali Kurta Pant Set (${document.getElementById('inputColor').value})`;
+          document.getElementById('amazon-title').value = `Jaipur Fab Women's Pure Cambric Cotton Floral Printed Anarkali Kurta with Palazzo & Dupatta Set`;
+          document.getElementById('flipkart-title').value = `Women Kurta and Palazzo Set Pure Cotton (${document.getElementById('inputColor').value} Pack of 1)`;
+        } else {
+          document.getElementById('meta-category').innerText = "Girls Clothing Sets";
+          document.getElementById('meta-gender').innerText = "Girls (2 - 8 Years)";
+          document.getElementById('meta-material').innerText = document.getElementById('inputFabric').value;
+          document.getElementById('meta-margin').innerText = `₹${Math.round(targetPrice * 0.45)} (45% Net Profit)`;
+
+          document.getElementById('meesho-title').value = `Pretty Stylish Girls Top & Bottom Sets (${document.getElementById('inputColor').value})`;
+          document.getElementById('amazon-title').value = `Jaipur Fab Girls Pure Cotton Floral Printed Top and Palazzo Bottom Set (Pack of 1)`;
+          document.getElementById('flipkart-title').value = `Girls Casual Top Trouser (${document.getElementById('inputColor').value}, Pack of 1 Pure Cotton)`;
+        }
+
+        document.getElementById('meesho-price').value = targetPrice;
+        document.getElementById('meesho-return-price').value = Math.max(0, targetPrice - 20);
+        document.getElementById('amazon-price').value = Math.round(targetPrice * 1.4);
+        document.getElementById('flipkart-price').value = Math.round(targetPrice * 1.2);
+
+        showToast('✨ AI successfully generated optimized listings for Meesho, Amazon & Flipkart!');
+      }, 800);
+    }
+
+    // Load Demo Presets
+    function loadDemoSample(type) {
+      if (type === 'girls-set') {
+        document.getElementById('inputRawPrompt').value = "Girls floral top and bottom set, cotton, red, age 2-8, ₹399, high quality stitching, elastic waist, breathable summer wear";
+        document.getElementById('inputBaseCost').value = "180";
+        document.getElementById('inputTargetPrice').value = "399";
+        document.getElementById('inputFabric').value = "100% Pure Cambric Cotton";
+        document.getElementById('inputColor').value = "Red / Floral Block Print";
+        document.getElementById('inputSizes').value = "2-3 Yrs, 3-4 Yrs, 4-5 Yrs, 5-6 Yrs, 7-8 Yrs";
+        document.getElementById('img-preview-1').src = "https://images.unsplash.com/photo-1622290291468-a28f7a7dc6a8?w=100&auto=format&fit=crop&q=80";
+        runAiListingEngine();
+      } else if (type === 'kurti-set') {
+        document.getElementById('inputRawPrompt').value = "Women pure cotton anarkali kurti with palazzo and dupatta set, sky blue jaipuri floral, ₹699, festive and office wear";
+        document.getElementById('inputBaseCost').value = "280";
+        document.getElementById('inputTargetPrice').value = "699";
+        document.getElementById('inputFabric').value = "100% Cambric 60-60 Cotton";
+        document.getElementById('inputColor').value = "Sky Blue / Gold Zari Print";
+        document.getElementById('inputSizes').value = "S (36), M (38), L (40), XL (42), XXL (44)";
+        document.getElementById('img-preview-1').src = "https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?w=100&auto=format&fit=crop&q=80";
+        runAiListingEngine();
+      }
+    }
+
+    // Load Product from Library / Health into AI Lister
+    function loadProductInLister(name, price, rawDesc) {
+      switchTab('ai-lister');
+      document.getElementById('inputRawPrompt').value = rawDesc;
+      document.getElementById('inputTargetPrice').value = price;
+      runAiListingEngine();
+      showToast(`⚡ Loaded "${name}" into 1-Click AI Lister`);
+    }
+
+    // Copy Current Active Marketplace
+    function copyCurrentMarketplace() {
+      copyMarketplaceDirect(currentChannelInView);
+    }
+
+    // Copy Single Marketplace Direct
+    function copyMarketplaceDirect(channel) {
+      let textToCopy = '';
+      if (channel === 'meesho') {
+        textToCopy = `=== MEESHO LISTING ===\nTitle: ${document.getElementById('meesho-title').value}\nPrice: ₹${document.getElementById('meesho-price').value}\nReturn Price: ₹${document.getElementById('meesho-return-price').value}\nHSN: ${document.getElementById('meesho-hsn').value}\n\nDescription:\n${document.getElementById('meesho-desc').value}`;
+      } else if (channel === 'amazon') {
+        textToCopy = `=== AMAZON INDIA LISTING ===\nTitle: ${document.getElementById('amazon-title').value}\nPrice: ₹${document.getElementById('amazon-price').value}\nMRP: ₹${document.getElementById('amazon-mrp').value}\nKeywords: ${document.getElementById('amazon-keywords').value}\n\nBullet Points:\n${document.getElementById('amazon-bullets').value}`;
+      } else if (channel === 'flipkart') {
+        textToCopy = `=== FLIPKART LISTING ===\nTitle: ${document.getElementById('flipkart-title').value}\nPrice: ₹${document.getElementById('flipkart-price').value}\nFSN Category: Ethnic Sets\nSLA: 1 Day`;
+      }
+      navigator.clipboard.writeText(textToCopy);
+      showToast(`📋 Copied ${channel.toUpperCase()} listing to clipboard!`);
+    }
+
+    // Copy All Marketplaces in 1 Clip
+    function copyAllMarketplaces() {
+      const allText = `==============================
+SELLERPILOT MULTI-LISTING EXPORT
+==============================
+
+[1] MEESHO LISTING:
+Title: ${document.getElementById('meesho-title').value}
+Price: ₹${document.getElementById('meesho-price').value} (Return: ₹${document.getElementById('meesho-return-price').value})
+Description:
+${document.getElementById('meesho-desc').value}
+
+------------------------------
+[2] AMAZON INDIA LISTING:
+Title: ${document.getElementById('amazon-title').value}
+Price: ₹${document.getElementById('amazon-price').value} (MRP: ₹${document.getElementById('amazon-mrp').value})
+Bullet Points:
+${document.getElementById('amazon-bullets').value}
+Keywords: ${document.getElementById('amazon-keywords').value}
+
+------------------------------
+[3] FLIPKART LISTING:
+Title: ${document.getElementById('flipkart-title').value}
+Price: ₹${document.getElementById('flipkart-price').value}`;
+
+      navigator.clipboard.writeText(allText);
+      showToast('📋 All 3 Marketplace Listings copied to clipboard!');
+    }
+
+    function publishAllChannels() {
+      showToast('🚀 Pushed listings simultaneously to Meesho, Amazon IN & Flipkart APIs!');
+    }
+
+    // ==========================================
+    // 3. NAVIGATION ROUTER
+    // ==========================================
+    function switchTab(tabId) {
+      const sections = ['analytics', 'ai-lister', 'products', 'orders', 'inventory', 'payouts', 'reports'];
+      
+      sections.forEach(s => {
+        const secEl = document.getElementById(`tab-${s}`);
+        const navEl = document.getElementById(`nav-${s}`);
+        if (secEl) secEl.classList.add('hidden');
+        if (navEl) {
+          navEl.classList.remove('bg-brand-50', 'text-brand-700', 'font-bold');
+          navEl.classList.add('text-slate-600', 'font-semibold');
+        }
+      });
+
+      const activeSec = document.getElementById(`tab-${tabId}`);
+      const activeNav = document.getElementById(`nav-${tabId}`);
+      if (activeSec) activeSec.classList.remove('hidden');
+      if (activeNav) {
+        activeNav.classList.add('bg-brand-50', 'text-brand-700', 'font-bold');
+        activeNav.classList.remove('text-slate-600', 'font-semibold');
+      }
+
+      if (tabId === 'analytics' && healthChartInstance) {
+        setTimeout(() => healthChartInstance.resize(), 50);
+      }
+    }
+
+    // ==========================================
+    // 4. CHROME EXTENSION INTERACTIONS
+    // ==========================================
+    function toggleChromeExtModal() {
+      document.getElementById('chromeModal').classList.toggle('hidden');
+    }
+
+    function syncFromExtension() {
+      toggleChromeExtModal();
+      switchTab('ai-lister');
+      loadDemoSample('girls-set');
+      showToast('⚡ Scraped catalog from Chrome Extension imported into AI Lister!');
+    }
+
+    function openManifestCodeModal() {
+      document.getElementById('manifestCodeModal').classList.remove('hidden');
+    }
+
+    function closeManifestCodeModal() {
+      document.getElementById('manifestCodeModal').classList.add('hidden');
+    }
+
+    // ==========================================
+    // 5. AUTHENTICATION & PROFILE SYSTEM
+    // ==========================================
+    function toggleProfileDropdown() {
+      document.getElementById('profileDropdown').classList.toggle('hidden');
+    }
+
+    function openAuthModal(view) {
+      document.getElementById('profileDropdown').classList.add('hidden');
+      document.getElementById('authModal').classList.remove('hidden');
+      switchAuthView(view);
+    }
+
+    function closeAuthModal() {
+      document.getElementById('authModal').classList.add('hidden');
+    }
+
+    function switchAuthView(view) {
+      const views = ['login', 'signup', 'forgot', 'profile'];
+      views.forEach(v => {
+        const el = document.getElementById(`auth-view-${v}`);
+        if (el) el.classList.add('hidden');
+      });
+
+      const active = document.getElementById(`auth-view-${view}`);
+      if (active) active.classList.remove('hidden');
+
+      const title = document.getElementById('authModalTitle');
+      if (view === 'login') title.innerText = 'Seller Login';
+      if (view === 'signup') title.innerText = 'Register New GST Seller Account';
+      if (view === 'forgot') title.innerText = 'Recover SellerPilot Account';
+      if (view === 'profile') title.innerText = 'Seller Business Profile & GSTIN';
+    }
+
+    function handleLoginSubmit() {
+      const email = document.getElementById('login-email').value;
+      closeAuthModal();
+      showToast(`✅ Welcome back! Logged in as ${email}`);
+    }
+
+    function handleSignupSubmit() {
+      const name = document.getElementById('signup-name').value || "Surat Fashion Hub";
+      const gst = document.getElementById('signup-gst').value || "24AAACH7409R1ZZ";
+      
+      document.getElementById('header-user-name').innerText = name;
+      document.getElementById('header-user-gst').innerText = `GST: ${gst}`;
+      document.getElementById('dropdown-user-name').innerText = name;
+      document.getElementById('user-avatar-initials').innerText = name.substring(0, 2).toUpperCase();
+
+      closeAuthModal();
+      showToast(`🎉 Account registered for ${name}! 1,000 AI Credits credited.`);
+    }
+
+    function simulateGoogleLogin() {
+      closeAuthModal();
+      showToast('✅ Google 1-Tap authentication successful!');
+    }
+
+    function simulateLogout() {
+      document.getElementById('profileDropdown').classList.add('hidden');
+      showToast('🔒 Signed out. Switched to Guest Demo Mode.');
+    }
+
+    function saveProfileChanges() {
+      const name = document.getElementById('prof-name').value;
+      const gst = document.getElementById('prof-gst').value;
+
+      document.getElementById('header-user-name').innerText = name;
+      document.getElementById('header-user-gst').innerText = `GST: ${gst}`;
+      document.getElementById('dropdown-user-name').innerText = name;
+      document.getElementById('prof-display-name').innerText = name;
+      document.getElementById('prof-display-gst').innerText = `GSTIN: ${gst}`;
+      document.getElementById('user-avatar-initials').innerText = name.substring(0, 2).toUpperCase();
+
+      closeAuthModal();
+      showToast('💾 Seller business profile updated!');
+    }
+
+    // ==========================================
+    // 6. SHIPPING LABELS & EXPORTS
+    // ==========================================
+    function showShippingLabelModal(orderId, portal, price, carrier) {
+      document.getElementById('lbl-order').innerText = orderId;
+      document.getElementById('lbl-portal').innerText = portal.toUpperCase();
+      document.getElementById('lbl-price').innerText = price;
+      document.getElementById('lbl-carrier').innerText = carrier.toUpperCase();
+      document.getElementById('shippingModal').classList.remove('hidden');
+    }
+
+    function closeShippingLabelModal() {
+      document.getElementById('shippingModal').classList.add('hidden');
+    }
+
+    function printBulkLabels() {
+      showShippingLabelModal('BULK-MANIFEST-BATCH (18 Parcels)', 'MULTI-PORTAL', '₹7,182', 'Delhivery / Shadowfax / ATS');
+    }
+
+    function exportCatalogCSV() {
+      showToast('📥 Master Product Library exported to SellerPilot_Catalog.csv');
+    }
+
+    // ==========================================
+    // 7. GLOBAL UTILITIES (TOAST & NOTIFICATIONS)
+    // ==========================================
+    let toastTimer;
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      const msg = document.getElementById('toast-msg');
+      msg.innerText = message;
+      toast.classList.remove('translate-y-20', 'opacity-0');
+      toast.classList.add('translate-y-0', 'opacity-100');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => {
+        toast.classList.remove('translate-y-0', 'opacity-100');
+        toast.classList.add('translate-y-20', 'opacity-0');
+      }, 3500);
+    }
+
+    function toggleNotifications() {
+      document.getElementById('notifDropdown').classList.toggle('hidden');
+    }
+
+    // Close Dropdowns on outside click
+    document.addEventListener('click', (e) => {
+      const notifBtn = document.getElementById('notifBtn');
+      const notifDropdown = document.getElementById('notifDropdown');
+      if (notifBtn && notifDropdown && !notifBtn.contains(e.target) && !notifDropdown.contains(e.target)) {
+        notifDropdown.classList.add('hidden');
+      }
+
+      const profDropdown = document.getElementById('profileDropdown');
+      if (profDropdown && !profDropdown.contains(e.target) && !e.target.closest('button[onclick="toggleProfileDropdown()"]')) {
+        profDropdown.classList.add('hidden');
+      }
+    });
+
+    // Start App & Chart on DOM Ready
+    window.addEventListener('DOMContentLoaded', () => {
+      initChart();
+    });
+  </script>
+</body>
+</html>
